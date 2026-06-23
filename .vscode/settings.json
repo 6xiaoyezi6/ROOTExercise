@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "edittree.C": "cpp",
+        "FitGauss.C": "cpp",
+        "GenerateFitGaussData.C": "cpp",
+        "SBT1.C": "cpp"
+    }
+}

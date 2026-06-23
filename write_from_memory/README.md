@@ -12,5 +12,9 @@
 https://zhihuanli.github.io/Experimental-Data-Analysis-Course/chapt2/2.5_data_analysis_process.html
 
 11. TChain 
+12. AddFriend
+13. TMath工具箱子
 
+14. #include <TCanvas.h>   // ROOT、标准库、外部库
+    #include "MyClass.h"   // 自己写的头文件
 
