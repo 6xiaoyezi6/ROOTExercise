@@ -98,3 +98,9 @@ void FitGauss() {
 
   c2->SaveAs(Form("%s/h2_fit.pdf", outdir.Data()));
 }
+/*
+更改ROOT文件中存储的TH2 图的范围
+Be10TargetThetaXY->GetXaxis()->SetRangeUser(-2, 2);
+Be10TargetThetaXY->GetYaxis()->SetRangeUser(-2, 2);
+Be10TargetThetaXY->Draw("COLZ");
+*/
