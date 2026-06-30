@@ -73,6 +73,7 @@ void FitGauss_Exercise() {
   TH1F *h2 = (TH1F *)hFile->Clone("h2");
   h2->SetTitle("Ex from histograms;Ex(ADC);Counts");
 
+
   fgauss1->SetParameters(450, 950, 70);
   fgauss1->SetLineColor(kRed);
   fgauss1->SetLineWidth(5);
