@@ -11,7 +11,7 @@
 // 演示如何读取并使用 String格式的变量
 void TestAllString() {
 
-  TFile* file = TFile::Open("/Users/yemingxin/nptool/Outputs/Simulation/ppapha.root", "READ");
+  TFile* file = TFile::Open("/Users/yemingxin/nptool/Outputs/Simulation/ppalpha.root", "READ");
   TTree* tree = (TTree*)file->Get("SimulatedTree");
 
   TClusterKnockoutConditions* ckoc = nullptr;
