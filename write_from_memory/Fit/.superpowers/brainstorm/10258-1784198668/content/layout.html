@@ -1,0 +1,45 @@
+<h2>Gauss 与 Breit-Wigner：选择单画布布局</h2>
+<p class="subtitle">重点比较峰形、长尾和积分填色区域；bin width 均为 20 ADC。</p>
+
+<div class="cards">
+  <div class="card" data-choice="overlay" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:18px;background:#fff">
+      <svg viewBox="0 0 520 280" width="100%" role="img" aria-label="同一坐标系叠加">
+        <line x1="48" y1="235" x2="500" y2="235" stroke="#334155" stroke-width="2"/>
+        <line x1="48" y1="235" x2="48" y2="20" stroke="#334155" stroke-width="2"/>
+        <path d="M70 232 C150 230 190 215 224 148 C244 105 255 46 270 42 C285 46 296 105 316 148 C350 215 390 230 480 232" fill="rgba(37,99,235,.22)" stroke="#2563eb" stroke-width="4"/>
+        <path d="M70 225 C145 218 205 195 238 144 C254 120 261 73 270 62 C279 73 286 120 302 144 C335 195 395 218 480 225" fill="rgba(220,38,38,.15)" stroke="#dc2626" stroke-width="4"/>
+        <rect x="204" y="40" width="132" height="195" fill="rgba(37,99,235,.12)"/>
+        <rect x="220" y="62" width="100" height="173" fill="rgba(220,38,38,.10)"/>
+        <text x="325" y="58" fill="#2563eb" font-size="16">Gaussian</text>
+        <text x="325" y="82" fill="#dc2626" font-size="16">Breit-Wigner</text>
+        <text x="220" y="270" fill="#334155" font-size="15">Ex (ADC)</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A · 同一坐标系叠加（推荐）</h3>
+      <p>两个直方图、两条拟合曲线和两块半透明积分区都叠加在同一坐标轴，峰形差异最直观。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:18px;background:#fff">
+      <svg viewBox="0 0 520 280" width="100%" role="img" aria-label="同一画布左右分区">
+        <rect x="18" y="18" width="232" height="225" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+        <rect x="270" y="18" width="232" height="225" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+        <line x1="45" y1="215" x2="235" y2="215" stroke="#334155"/><line x1="45" y1="215" x2="45" y2="38" stroke="#334155"/>
+        <line x1="297" y1="215" x2="487" y2="215" stroke="#334155"/><line x1="297" y1="215" x2="297" y2="38" stroke="#334155"/>
+        <path d="M55 212 C95 210 112 190 128 126 C139 80 144 46 150 42 C156 46 161 80 172 126 C188 190 205 210 225 212" fill="rgba(37,99,235,.22)" stroke="#2563eb" stroke-width="3"/>
+        <path d="M307 207 C345 200 378 175 397 130 C405 109 409 61 414 54 C419 61 423 109 431 130 C450 175 467 200 477 207" fill="rgba(220,38,38,.18)" stroke="#dc2626" stroke-width="3"/>
+        <text x="97" y="267" fill="#2563eb" font-size="16">Gaussian</text>
+        <text x="350" y="267" fill="#dc2626" font-size="16">Breit-Wigner</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B · 同一画布左右分区</h3>
+      <p>每个模型有独立 pad，填色更清楚，但不容易直接比较同一横坐标处的两种峰形。</p>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle">点击选择 A 或 B，然后回到对话中告诉我你的选择。</p>
