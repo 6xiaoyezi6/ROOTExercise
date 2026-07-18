@@ -1,0 +1,40 @@
+递归必须包含两个部分:
+1. 终止条件：若不含有终止条件 递归会不停的进行下去
+if (满足终止条件) return;
+2.函数调用自身;
+
+for 循环：反复执行同一代码块
+递归：函数调用自己
+
+例如：计算 1+2+3+..+n
+
+1. for循环
+int SumFor(int n)
+{
+    int sum = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        sum += i;
+    }
+
+    return sum;
+}
+
+
+2. 递归
+
+int SumRecursive(int n)
+{
+    if (n <= 0) {
+        return 0;
+    }
+
+    return n + SumRecursive(n - 1);
+}
+
+当执行SumRecursive(4)时：
+4 + SumRecursive(3)
+4 + 3 + SumRecursive(2)
+4 + 3 + 2 + SumRecursive(1)
+4 + 3 + 2 + 1 + SumRecursive(0)
+4 + 3 + 2 + 1 + 0
