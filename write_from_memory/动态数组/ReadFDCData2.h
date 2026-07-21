@@ -4,11 +4,12 @@
 #include "RtypesCore.h"
 
 struct FDC0Hit {
-  Int_t eventID;
-  Int_t layerID;
-  Int_t hit;
-  Int_t wireID;
+  Int_t EventID;
+  Int_t LayerID;
+  Int_t HitIndex;//HitIndex
+  Int_t WireID;
   Double_t TDC;
 };
 
 #endif
+

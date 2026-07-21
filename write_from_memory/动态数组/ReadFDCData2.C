@@ -72,10 +72,10 @@ void ReadFDCData2() {
     //遍历当前事件中的所有hit
     for (Int_t hit = 0; hit < (Int_t)FDC0_TDC->size(); hit++) {
       FDC0Hit fdc0Hit;//创建一个临时结构体对象
-      fdc0Hit.eventID = eventID;//填入当前 hit 的数据到结构体
-      fdc0Hit.layerID = FDC0_layerid->at(hit);
-      fdc0Hit.hit = hit;//FDC0_layerid vector 的第 hit 个元素
-      fdc0Hit.wireID = FDC0_wireid->at(hit);
+      fdc0Hit.EventID = eventID;//填入当前 hit 的数据到结构体
+      fdc0Hit.LayerID = FDC0_layerid->at(hit);
+      fdc0Hit.HitIndex = hit;//FDC0_layerid vector 的第 hit 个元素
+      fdc0Hit.WireID = FDC0_wireid->at(hit);
       fdc0Hit.TDC = FDC0_TDC->at(hit);
 
       FDC0_hits.push_back(fdc0Hit);//将结构体加入 vector
@@ -85,10 +85,10 @@ void ReadFDCData2() {
     if (i == 0) {
       for (Int_t index = 0; index < (Int_t)FDC0_hits.size(); index++) //逐个读取动态数组的每一个元素，动态数组的每一个元素都是结构体
       {
-        std::cout << "  eventID = " << FDC0_hits[index].eventID
-                  << ", layerID = " << FDC0_hits[index].layerID
-                  << ", hit = " << FDC0_hits[index].hit
-                  << ", wireID = " << FDC0_hits[index].wireID
+        std::cout << "  EventID = " << FDC0_hits[index].EventID
+                  << ", LayerID = " << FDC0_hits[index].LayerID
+                  << ", HitIndex = " << FDC0_hits[index].HitIndex
+                  << ", WireID = " << FDC0_hits[index].WireID
                   << ", TDC = " << FDC0_hits[index].TDC << std::endl;
       }
     }
