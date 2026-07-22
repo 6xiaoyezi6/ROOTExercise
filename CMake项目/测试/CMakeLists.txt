@@ -25,10 +25,15 @@ add_executable(EnergyLossTGraph ${src_list})
 
 
 
-
 # 指定头文件目录
-target_include_directories(EnergyLossTGraph PRIVATE include)
+target_include_directories(EnergyLossTGraph PRIVATE include) #是这是目标级命令，只给 EnergyLossTGraph 添加头文件搜索路径，目标必须已经由 add_executable() 或 add_library() 创建
+#include_directories(include) #这是目录级命令。它会把 include 添加到当前 CMakeLists.txt 目录范围内的头文件搜索路径，并可能影响该目录下的多个目标以及子目录
 
+#使用add_library(库目标名 STATIC/SHARED 源文件)来制作静态(static)或动态(share)链接库
+#把源码编译成链接库，就可以在其他地方直接调用这个链接库
+
+#这是链接动态库的命令：target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE>)
+#动态库的链接具有传递性，通过PRIVATE/PUBLIC来控制传递性
 target_link_libraries(EnergyLossTGraph PRIVATE
     ROOT::Core
     ROOT::RIO
