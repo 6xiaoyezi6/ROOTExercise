@@ -30,8 +30,12 @@ public:
 */
 
 //这里里面的Getter函数是没有参数的
+////“声明指针”和“创建对象并把对象地址赋给指针”是放在一个文件中的
 class GetterBDCReader {
 private:
+ //这三个量只能定义在构造函数外面
+ //inputFile、calTree 和 rawTree 如果定义在构造函数内部，它们只是局部变量，构造函数结束后这些变量名就不存在了
+ //但构造函数之后的函数也要使用这些量
   TFile *inputFile;
   TTree *calTree;
   TTree *rawTree;
@@ -46,7 +50,9 @@ private:
   Double_t BDC2_Y;
 
   std::vector<double> *bdc1_drift;
-
+/////////////////////////////////////////上面这些量是成员变量
+//成员变量就是“属于某个类对象的变量”。它们写在类里面、函数外面，用来保存这个对象需要长期使用的数据
+//写在函数内部的是局部变量，函数结束，这些局域变量也就没有了
 public:
   GetterBDCReader(const char *fileName) 
   {
