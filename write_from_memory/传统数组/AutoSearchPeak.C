@@ -16,6 +16,7 @@ void AutoSearchPeak() {
   TH1F *h = (TH1F *)f->Get("h");
   h->SetDirectory(0);//让柱状图不随文件而关闭
 
+  //1.背景估计与背景扣除----------------------------------------
   const Int_t nMaximumPeaks = 10;
   TSpectrum*s = new TSpectrum(nMaximumPeaks);
 
@@ -37,6 +38,8 @@ void AutoSearchPeak() {
 
   canvas->cd(2);
   hPeaks->Draw("hist");
+
+  //2. 寻找峰的位置----------------------------------------
   Int_t nFound = s->Search(hPeaks, 3, "hist", 0.01);//Search(直方图, 寻找的峰宽度sigma, 选项, threshold)
   //减小threshold会增加候选峰的数目
 

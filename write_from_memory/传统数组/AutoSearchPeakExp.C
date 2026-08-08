@@ -4,6 +4,7 @@
 #include "TFile.h"
 #include "TH1.h"
 #include "TH1F.h"
+#include "TPolyMarker.h"
 #include "TStyle.h"
 #include "TSpectrum.h"
 #include "TTree.h"
@@ -22,23 +23,17 @@ void SetHistAxisTitleExp(TH1 *h, const char *xTitle, const char *xUnit) {
 void AutoSearchPeakExp() {
   gStyle->SetOptStat(111111111);
 
-  TFile *f = TFile::Open(
-      "/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/"
-      "Back2TrackingBDCEspri/Ex.root",
-      "READ");
+  TFile *f = TFile::Open("/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Back2TrackingBDCEspri/Ex.root","READ");
   TTree *tree = (TTree *)f->Get("tree");
 
-  Long64_t nSelected = tree->Draw(
-      "ExWithCut>>h(500,-20,30)",
-      "ExWithCut!=-999",
-      "goff");
+  Long64_t nSelected = tree->Draw("ExWithCut>>h(500,-20,30)","ExWithCut!=-999","goff");
 
   TH1F *h = (TH1F *)gDirectory->Get("h");
   h->SetDirectory(0);
   h->SetTitle("Experimental excitation-energy spectrum");
   SetHistAxisTitleExp(h, "E_{x}", "MeV");
 
-
+  //1.背景估计与背景扣除----------------------------------------
   const Int_t nMaximumPeaks = 10;
   TSpectrum *s = new TSpectrum(nMaximumPeaks);
 
@@ -51,11 +46,10 @@ void AutoSearchPeakExp() {
   TH1F *hPeaks = (TH1F *)h->Clone("hPeaksExp");
   hPeaks->SetDirectory(0);
   hPeaks->SetTitle("Background-subtracted excitation-energy spectrum");
-  hPeaks->Add(hBackground, -1.0);
+  hPeaks->Add(hPeaks, hBackground, 1, -1);//本底扣除hPeaks = 1 × 原始能谱 - 1 × 本底谱
   SetHistAxisTitleExp(hPeaks, "E_{x}", "MeV");
 
-  TCanvas *canvas =
-      new TCanvas("canvasExp", "TSpectrum experimental peak search", 900, 700);
+  TCanvas *canvas =new TCanvas("canvasExp", "TSpectrum experimental peak search", 900, 700);
   canvas->Divide(1, 2);
 
   canvas->cd(1);
@@ -64,8 +58,18 @@ void AutoSearchPeakExp() {
 
   canvas->cd(2);
   hPeaks->Draw("hist");
-  Int_t nFound = s->Search(hPeaks, 2, "hist", 0.01);//Search(直方图, 寻找的峰宽度sigma, 选项, threshold)
+
+  //2. 寻找峰的位置----------------------------------------
+  Int_t nFound = s->Search(hPeaks, 2, "nobackground hist", 0.01);//hPeaks已经扣过本底，寻峰时不再重复扣本底
   //减小threshold会增加候选峰的数目
+
+  if (nFound > 0) {
+    TPolyMarker *peakMarkers = (TPolyMarker *)hPeaks->GetListOfFunctions()->FindObject("TPolyMarker");
+    peakMarkers->SetMarkerStyle(23);//红色倒三角
+    peakMarkers->SetMarkerColor(kRed);
+    peakMarkers->SetMarkerSize(1.0);
+    peakMarkers->Draw("same");
+  }
 
   Double_t peakPositions[nMaximumPeaks];
   Double_t *xPeaks = s->GetPositionX();
@@ -82,5 +86,6 @@ void AutoSearchPeakExp() {
   }
 
   canvas->Update();
+  canvas->SaveAs("TSpectrumExp.pdf");
   f->Close();
 }
