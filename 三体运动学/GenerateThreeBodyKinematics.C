@@ -25,7 +25,7 @@
 //   4. Phi correlation histograms: phiB vs phi1, phiB vs phi2, phi1 vs phi2
 //   5. Delta-phi distributions: dphiB1, dphiB2, dphi12
 //   6. TTree containing event-by-event four-momentum information
-//   7. ROOT file: PureThreeBodyKinematics.root
+//   7. ROOT file: output/PureThreeBodyKinematics.root
 //
 // Drawing is handled separately by Draw.C.
 //
@@ -51,6 +51,7 @@
 #include "TVector3.h"
 #include "TRandom3.h"
 #include "TMath.h"
+#include "TSystem.h"
 
 using namespace std;
 
@@ -60,6 +61,8 @@ using namespace std;
 
 void GenerateThreeBodyKinematics()
 {
+    gSystem->mkdir("output", kTRUE);
+
     // ------------------------------------------------------------
     // 1. User input
     // ------------------------------------------------------------
@@ -102,7 +105,7 @@ void GenerateThreeBodyKinematics()
     double BeamA_ForEnergy = 10.0;
 
     // Number of Monte Carlo events.
-    Long64_t NEvents = 1000000;
+    Long64_t NEvents = 10000000;
 
     // Random seed.
     // 0 means ROOT chooses a time-dependent seed.
@@ -127,7 +130,7 @@ void GenerateThreeBodyKinematics()
     bool UsePhaseSpaceWeightInHist = false;
 
     // Output file name.
-    const char* OutputFileName = "PureThreeBodyKinematics.root";
+    const char* OutputFileName = "output/PureThreeBodyKinematics.root";
 
     // ------------------------------------------------------------
     // 2. Constants and mass conversion

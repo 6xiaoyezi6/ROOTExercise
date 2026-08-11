@@ -1,6 +1,6 @@
 // Draw.C
 //
-// Read PureThreeBodyKinematics.root and draw fifteen PDF files.
+// Read output/PureThreeBodyKinematics.root and draw fifteen PDF files.
 
 #include <iostream>
 
@@ -14,6 +14,7 @@
 #include "TH2D.h"
 #include "TString.h"
 #include "TStyle.h"
+#include "TSystem.h"
 
 using namespace std;
 
@@ -48,8 +49,9 @@ void SaveOneDimensionalHistogram(TCanvas* canvas,
 void Draw()
 {
     gStyle->SetOptStat(111111111);
+    gSystem->mkdir("output", kTRUE);
 
-    const char* InputFileName = "PureThreeBodyKinematics.root";
+    const char* InputFileName = "output/PureThreeBodyKinematics.root";
 
     TFile* inputFile = TFile::Open(InputFileName, "READ");
     if (!inputFile || inputFile->IsZombie()) {
@@ -145,47 +147,47 @@ void Draw()
     hB_TTheta->Draw("COLZ");
     gB_Tmin->Draw("L SAME");
     gB_Tmax->Draw("L SAME");
-    canvas->SaveAs("PureThreeBody_B_T_vs_theta.pdf");
+    canvas->SaveAs("output/PureThreeBody_B_T_vs_theta.pdf");
 
     canvas->Clear();
     h1_TTheta->Draw("COLZ");
     g1_Tmin->Draw("L SAME");
     g1_Tmax->Draw("L SAME");
-    canvas->SaveAs("PureThreeBody_1_T_vs_theta.pdf");
+    canvas->SaveAs("output/PureThreeBody_1_T_vs_theta.pdf");
 
     canvas->Clear();
     h2_TTheta->Draw("COLZ");
     g2_Tmin->Draw("L SAME");
     g2_Tmax->Draw("L SAME");
-    canvas->SaveAs("PureThreeBody_2_T_vs_theta.pdf");
+    canvas->SaveAs("output/PureThreeBody_2_T_vs_theta.pdf");
 
     SaveTwoDimensionalHistogram(
-        canvas, hT1_T2, "PureThreeBody_T1_vs_T2.pdf");
+        canvas, hT1_T2, "output/PureThreeBody_T1_vs_T2.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hTB_T1, "PureThreeBody_TB_vs_T1.pdf");
+        canvas, hTB_T1, "output/PureThreeBody_TB_vs_T1.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hTB_T2, "PureThreeBody_TB_vs_T2.pdf");
+        canvas, hTB_T2, "output/PureThreeBody_TB_vs_T2.pdf");
 
     SaveTwoDimensionalHistogram(
-        canvas, hThetaB_Theta1, "PureThreeBody_thetaB_vs_theta1.pdf");
+        canvas, hThetaB_Theta1, "output/PureThreeBody_thetaB_vs_theta1.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hThetaB_Theta2, "PureThreeBody_thetaB_vs_theta2.pdf");
+        canvas, hThetaB_Theta2, "output/PureThreeBody_thetaB_vs_theta2.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hTheta1_Theta2, "PureThreeBody_theta1_vs_theta2.pdf");
+        canvas, hTheta1_Theta2, "output/PureThreeBody_theta1_vs_theta2.pdf");
 
     SaveTwoDimensionalHistogram(
-        canvas, hPhiB_Phi1, "PureThreeBody_phiB_vs_phi1.pdf");
+        canvas, hPhiB_Phi1, "output/PureThreeBody_phiB_vs_phi1.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hPhiB_Phi2, "PureThreeBody_phiB_vs_phi2.pdf");
+        canvas, hPhiB_Phi2, "output/PureThreeBody_phiB_vs_phi2.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hPhi1_Phi2, "PureThreeBody_phi1_vs_phi2.pdf");
+        canvas, hPhi1_Phi2, "output/PureThreeBody_phi1_vs_phi2.pdf");
 
     SaveOneDimensionalHistogram(
-        canvas, hDeltaPhiB1, "PureThreeBody_deltaPhiB1.pdf");
+        canvas, hDeltaPhiB1, "output/PureThreeBody_deltaPhiB1.pdf");
     SaveOneDimensionalHistogram(
-        canvas, hDeltaPhiB2, "PureThreeBody_deltaPhiB2.pdf");
+        canvas, hDeltaPhiB2, "output/PureThreeBody_deltaPhiB2.pdf");
     SaveOneDimensionalHistogram(
-        canvas, hDeltaPhi12, "PureThreeBody_deltaPhi12.pdf");
+        canvas, hDeltaPhi12, "output/PureThreeBody_deltaPhi12.pdf");
 
     inputFile->Close();
 
