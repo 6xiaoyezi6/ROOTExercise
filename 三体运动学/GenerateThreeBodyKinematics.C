@@ -5,7 +5,8 @@
 //       output/PureThreeBodyKinematics.root。
 // 方法：在总质心系中用两步两体衰变构造满足四动量守恒的末态，
 //       再 boost 到实验室系；能量-角度直方图用角度作横轴，含 T1 的
-//       动能-动能直方图用 T1 作横轴。
+//       动能-动能直方图用 T1 作横轴；theta1-theta2 直方图用
+//       theta2 作横轴、theta1 作纵轴。
 // 注意事项：模型只包含三体相空间和四动量守恒，不包含反应动力学、截面、
 //           探测器接受度或末态相互作用；质量单位为 u，内部能量单位为 MeV，
 //           角度单位为 degree；直方图可见边缘受蒙卡统计和分箱影响，
@@ -280,7 +281,7 @@ void GenerateThreeBodyKinematics()
 
     TH2D* hTheta1_Theta2 = new TH2D(
         "hTheta1_Theta2",
-        ";#theta_{1}^{lab} [deg];#theta_{2}^{lab} [deg]",
+        ";#theta_{2}^{lab} [deg];#theta_{1}^{lab} [deg]",
         NThetaBins, 0.0, 180.0,
         NThetaBins, 0.0, 180.0
     );
@@ -557,7 +558,7 @@ void GenerateThreeBodyKinematics()
 
         hThetaB_Theta1->Fill(thetaB_lab, theta1_lab, fillWeight);
         hThetaB_Theta2->Fill(thetaB_lab, theta2_lab, fillWeight);
-        hTheta1_Theta2->Fill(theta1_lab, theta2_lab, fillWeight);
+        hTheta1_Theta2->Fill(theta2_lab, theta1_lab, fillWeight);
 
         hPhiB_Phi1->Fill(phiB_lab, phi1_lab, fillWeight);
         hPhiB_Phi2->Fill(phiB_lab, phi2_lab, fillWeight);

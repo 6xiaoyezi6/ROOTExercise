@@ -4,6 +4,7 @@
 //       MeV 换算为 MeV/u，并绘制 15 张无顶部标题、无统计框的三体运动学 PDF 图。
 // 方法：按 B(6He)、1(p)、2(alpha) 的质量数 6、1、4 线性缩放直方图动能坐标，
 //       能量-角度图保持角度为横轴，含 T1 的动能-动能图保持 T1 为横轴；
+//       PureThreeBodyTheta1Theta2.pdf 以 theta2 为横轴、theta1 为纵轴；
 //       只绘制蒙特卡洛直方图，不在本文件中叠加运动学边界。
 // 注意事项：输入 ROOT 文件中的动能必须为总动能 MeV；若更换反应道或粒子同位素，
 //           必须同步修改 Draw() 中的三个质量数常量；运动学边界由独立宏绘制。
@@ -171,10 +172,10 @@ void Draw()
     hThetaB_Theta2->GetYaxis()->SetRangeUser(Theta2DisplayMin,
                                              Theta2DisplayMax);
 
-    hTheta1_Theta2->GetXaxis()->SetRangeUser(Theta1DisplayMin,
-                                             Theta1DisplayMax);
-    hTheta1_Theta2->GetYaxis()->SetRangeUser(Theta2DisplayMin,
+    hTheta1_Theta2->GetXaxis()->SetRangeUser(Theta2DisplayMin,
                                              Theta2DisplayMax);
+    hTheta1_Theta2->GetYaxis()->SetRangeUser(Theta1DisplayMin,
+                                             Theta1DisplayMax);
 
     hDeltaPhiB1->GetXaxis()->SetRangeUser(0.0, 360.0);
     hDeltaPhiB2->GetXaxis()->SetRangeUser(0.0, 360.0);
@@ -189,38 +190,38 @@ void Draw()
     canvas->Clear();
     hB_TTheta->SetTitle("");
     hB_TTheta->Draw("COLZ");
-    canvas->SaveAs("output/PureThreeBody_B_T_vs_theta.pdf");
+    canvas->SaveAs("output/PureThreeBodyTTheta_B.pdf");
 
     canvas->Clear();
     h1_TTheta->SetTitle("");
     h1_TTheta->Draw("COLZ");
-    canvas->SaveAs("output/PureThreeBody_1_T_vs_theta.pdf");
+    canvas->SaveAs("output/PureThreeBodyTTheta_1.pdf");
 
     canvas->Clear();
     h2_TTheta->SetTitle("");
     h2_TTheta->Draw("COLZ");
-    canvas->SaveAs("output/PureThreeBody_2_T_vs_theta.pdf");
+    canvas->SaveAs("output/PureThreeBodyTTheta_2.pdf");
 
     SaveTwoDimensionalHistogram(
-        canvas, hT1_T2, "output/PureThreeBody_T1_vs_T2.pdf");
+        canvas, hT1_T2, "output/PureThreeBodyT1T2.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hTB_T1, "output/PureThreeBody_TB_vs_T1.pdf");
+        canvas, hTB_T1, "output/PureThreeBodyT1TB.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hTB_T2, "output/PureThreeBody_TB_vs_T2.pdf");
+        canvas, hTB_T2, "output/PureThreeBodyT2TB.pdf");
 
     SaveTwoDimensionalHistogram(
-        canvas, hThetaB_Theta1, "output/PureThreeBody_thetaB_vs_theta1.pdf");
+        canvas, hThetaB_Theta1, "output/PureThreeBodyTheta1ThetaB.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hThetaB_Theta2, "output/PureThreeBody_thetaB_vs_theta2.pdf");
+        canvas, hThetaB_Theta2, "output/PureThreeBodyTheta2ThetaB.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hTheta1_Theta2, "output/PureThreeBody_theta1_vs_theta2.pdf");
+        canvas, hTheta1_Theta2, "output/PureThreeBodyTheta1Theta2.pdf");
 
     SaveTwoDimensionalHistogram(
-        canvas, hPhiB_Phi1, "output/PureThreeBody_phiB_vs_phi1.pdf");
+        canvas, hPhiB_Phi1, "output/PureThreeBodyPhi1PhiB.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hPhiB_Phi2, "output/PureThreeBody_phiB_vs_phi2.pdf");
+        canvas, hPhiB_Phi2, "output/PureThreeBodyPhi2PhiB.pdf");
     SaveTwoDimensionalHistogram(
-        canvas, hPhi1_Phi2, "output/PureThreeBody_phi1_vs_phi2.pdf");
+        canvas, hPhi1_Phi2, "output/PureThreeBodyPhi1Phi2.pdf");
 
     SaveOneDimensionalHistogram(
         canvas, hDeltaPhiB1, "output/PureThreeBody_deltaPhiB1.pdf");
