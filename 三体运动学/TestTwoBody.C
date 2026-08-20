@@ -1,3 +1,12 @@
+// TestTwoBody.C
+//
+// 功能：比较 10Be+p 基态弹性散射的隐式相对论二体运动学曲线与
+//       TwoBodyKinematics 工具返回的质子能量-角度曲线，输出对比 PDF。
+// 方法：由能量和动量守恒构造 TF2 零等高线，再叠加
+//       TwoBodyKinematicsEnergyAngleProton 给出的物理分支。
+// 注意事项：默认入射能量为 150 MeV/u，输出能量单位为 MeV/u；依赖本机
+//           TwoBodyKinematics 绝对路径，并会覆盖 output 目录中的同名 PDF。
+
 #include <cmath>
 
 #include "TCanvas.h"

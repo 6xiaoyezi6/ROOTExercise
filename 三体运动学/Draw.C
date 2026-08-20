@@ -1,6 +1,12 @@
 // Draw.C
 //
-// Read output/PureThreeBodyKinematics.root and draw fifteen PDF files.
+// 功能：读取 output/PureThreeBodyKinematics.root，将末态粒子动能从总动能
+//       MeV 换算为 MeV/u，并绘制 15 张无顶部标题、无统计框的三体运动学 PDF 图。
+// 方法：按 B(6He)、1(p)、2(alpha) 的质量数 6、1、4 线性缩放直方图动能坐标，
+//       能量-角度图保持角度为横轴，含 T1 的动能-动能图保持 T1 为横轴；
+//       只绘制蒙特卡洛直方图，不在本文件中叠加运动学边界。
+// 注意事项：输入 ROOT 文件中的动能必须为总动能 MeV；若更换反应道或粒子同位素，
+//           必须同步修改 Draw() 中的三个质量数常量；运动学边界由独立宏绘制。
 
 #include <iostream>
 
@@ -8,7 +14,6 @@
 #include "TCanvas.h"
 #include "TDirectory.h"
 #include "TFile.h"
-#include "TGraph.h"
 #include "TH1.h"
 #include "TH1D.h"
 #include "TH2D.h"
@@ -33,6 +38,7 @@ void SaveTwoDimensionalHistogram(TCanvas* canvas,
                                  const char* outputFileName)
 {
     canvas->Clear();
+    histogram->SetTitle("");
     histogram->Draw("COLZ");
     canvas->SaveAs(outputFileName);
 }
@@ -42,13 +48,20 @@ void SaveOneDimensionalHistogram(TCanvas* canvas,
                                  const char* outputFileName)
 {
     canvas->Clear();
+    histogram->SetTitle("");
     histogram->Draw();
     canvas->SaveAs(outputFileName);
 }
 
+void ScaleAxisToEnergyPerNucleon(TAxis* axis, double massNumber)
+{
+    axis->SetLimits(axis->GetXmin() / massNumber,
+                    axis->GetXmax() / massNumber);
+}
+
 void Draw()
 {
-    gStyle->SetOptStat(111111111);
+    gStyle->SetOptStat(0);
     gSystem->mkdir("output", kTRUE);
 
     const char* InputFileName = "output/PureThreeBodyKinematics.root";
@@ -104,34 +117,64 @@ void Draw()
     TH1D* hDeltaPhi12 =
         (TH1D*)histogramDirectory->Get("hDeltaPhi12");
 
-    TGraph* gB_Tmin =
-        (TGraph*)histogramDirectory->Get("gB_Tmin");
-    TGraph* gB_Tmax =
-        (TGraph*)histogramDirectory->Get("gB_Tmax");
-    TGraph* g1_Tmin =
-        (TGraph*)histogramDirectory->Get("g1_Tmin");
-    TGraph* g1_Tmax =
-        (TGraph*)histogramDirectory->Get("g1_Tmax");
-    TGraph* g2_Tmin =
-        (TGraph*)histogramDirectory->Get("g2_Tmin");
-    TGraph* g2_Tmax =
-        (TGraph*)histogramDirectory->Get("g2_Tmax");
+    const double MassNumberB = 6.0;
+    const double MassNumber1 = 1.0;
+    const double MassNumber2 = 4.0;
 
-    const double ThetaDisplayMin = 0.0;
-    const double ThetaDisplayMax = 90.0;
+    ScaleAxisToEnergyPerNucleon(hB_TTheta->GetYaxis(), MassNumberB);
+    ScaleAxisToEnergyPerNucleon(h1_TTheta->GetYaxis(), MassNumber1);
+    ScaleAxisToEnergyPerNucleon(h2_TTheta->GetYaxis(), MassNumber2);
 
-    hB_TTheta->GetXaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
-    h1_TTheta->GetXaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
-    h2_TTheta->GetXaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
+    hB_TTheta->GetYaxis()->SetTitle("T_{B}^{lab} [MeV/u]");
+    h1_TTheta->GetYaxis()->SetTitle("T_{1}^{lab} [MeV/u]");
+    h2_TTheta->GetYaxis()->SetTitle("T_{2}^{lab} [MeV/u]");
 
-    hThetaB_Theta1->GetXaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
-    hThetaB_Theta1->GetYaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
+    ScaleAxisToEnergyPerNucleon(hT1_T2->GetXaxis(), MassNumber1);
+    ScaleAxisToEnergyPerNucleon(hT1_T2->GetYaxis(), MassNumber2);
+    hT1_T2->GetXaxis()->SetTitle("T_{1}^{lab} [MeV/u]");
+    hT1_T2->GetYaxis()->SetTitle("T_{2}^{lab} [MeV/u]");
 
-    hThetaB_Theta2->GetXaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
-    hThetaB_Theta2->GetYaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
+    ScaleAxisToEnergyPerNucleon(hTB_T1->GetXaxis(), MassNumber1);
+    ScaleAxisToEnergyPerNucleon(hTB_T1->GetYaxis(), MassNumberB);
+    hTB_T1->GetXaxis()->SetTitle("T_{1}^{lab} [MeV/u]");
+    hTB_T1->GetYaxis()->SetTitle("T_{B}^{lab} [MeV/u]");
 
-    hTheta1_Theta2->GetXaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
-    hTheta1_Theta2->GetYaxis()->SetRangeUser(ThetaDisplayMin, ThetaDisplayMax);
+    ScaleAxisToEnergyPerNucleon(hTB_T2->GetXaxis(), MassNumberB);
+    ScaleAxisToEnergyPerNucleon(hTB_T2->GetYaxis(), MassNumber2);
+    hTB_T2->GetXaxis()->SetTitle("T_{B}^{lab} [MeV/u]");
+    hTB_T2->GetYaxis()->SetTitle("T_{2}^{lab} [MeV/u]");
+
+    const double T1DisplayMin = 0.0;
+    const double T1DisplayMax = 800.0;
+    const double ThetaBDisplayMin = 0.0;
+    const double ThetaBDisplayMax = 40.0;
+    const double Theta1DisplayMin = 0.0;
+    const double Theta1DisplayMax = 90.0;
+    const double Theta2DisplayMin = 0.0;
+    const double Theta2DisplayMax = 40.0;
+
+    h1_TTheta->GetYaxis()->SetRangeUser(T1DisplayMin, T1DisplayMax);
+    hT1_T2->GetXaxis()->SetRangeUser(T1DisplayMin, T1DisplayMax);
+    hTB_T1->GetXaxis()->SetRangeUser(T1DisplayMin, T1DisplayMax);
+
+    hB_TTheta->GetXaxis()->SetRangeUser(ThetaBDisplayMin, ThetaBDisplayMax);
+    h1_TTheta->GetXaxis()->SetRangeUser(Theta1DisplayMin, Theta1DisplayMax);
+    h2_TTheta->GetXaxis()->SetRangeUser(Theta2DisplayMin, Theta2DisplayMax);
+
+    hThetaB_Theta1->GetXaxis()->SetRangeUser(ThetaBDisplayMin,
+                                             ThetaBDisplayMax);
+    hThetaB_Theta1->GetYaxis()->SetRangeUser(Theta1DisplayMin,
+                                             Theta1DisplayMax);
+
+    hThetaB_Theta2->GetXaxis()->SetRangeUser(ThetaBDisplayMin,
+                                             ThetaBDisplayMax);
+    hThetaB_Theta2->GetYaxis()->SetRangeUser(Theta2DisplayMin,
+                                             Theta2DisplayMax);
+
+    hTheta1_Theta2->GetXaxis()->SetRangeUser(Theta1DisplayMin,
+                                             Theta1DisplayMax);
+    hTheta1_Theta2->GetYaxis()->SetRangeUser(Theta2DisplayMin,
+                                             Theta2DisplayMax);
 
     hDeltaPhiB1->GetXaxis()->SetRangeUser(0.0, 360.0);
     hDeltaPhiB2->GetXaxis()->SetRangeUser(0.0, 360.0);
@@ -144,21 +187,18 @@ void Draw()
     TCanvas* canvas = new TCanvas("canvas", "Three-body kinematics", 900, 700);
 
     canvas->Clear();
+    hB_TTheta->SetTitle("");
     hB_TTheta->Draw("COLZ");
-    gB_Tmin->Draw("L SAME");
-    gB_Tmax->Draw("L SAME");
     canvas->SaveAs("output/PureThreeBody_B_T_vs_theta.pdf");
 
     canvas->Clear();
+    h1_TTheta->SetTitle("");
     h1_TTheta->Draw("COLZ");
-    g1_Tmin->Draw("L SAME");
-    g1_Tmax->Draw("L SAME");
     canvas->SaveAs("output/PureThreeBody_1_T_vs_theta.pdf");
 
     canvas->Clear();
+    h2_TTheta->SetTitle("");
     h2_TTheta->Draw("COLZ");
-    g2_Tmin->Draw("L SAME");
-    g2_Tmax->Draw("L SAME");
     canvas->SaveAs("output/PureThreeBody_2_T_vs_theta.pdf");
 
     SaveTwoDimensionalHistogram(

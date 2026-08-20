@@ -1,3 +1,12 @@
+// TwoBody.C
+//
+// 功能：绘制 4He+p -> p+4He 弹性散射中出射质子的实验室系
+//       动能-角度二体运动学曲线，输出 output/twobody.pdf。
+// 方法：使用相对论能量和动量守恒方程定义 TF2 隐函数，以零等高线
+//       提取允许的质子能量-角度关系。
+// 注意事项：质量输入单位为 u，默认 alpha 入射能量为 150 MeV/u，
+//           质子动能输出为 MeV/u；运行时会覆盖同名 PDF。
+
 #include <cmath>
 
 #include "TCanvas.h"

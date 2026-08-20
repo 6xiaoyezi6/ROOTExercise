@@ -1,44 +1,18 @@
 // GenerateThreeBodyKinematics.C
 //
-// Pure relativistic three-body kinematics simulation:
-//
-//      A + T -> B + 1 + 2
-//
-// A: beam particle, moving along +z direction in lab
-// T: target particle, at rest in lab
-// B, 1, 2: final-state particles
-//
-// The only strict condition is four-momentum conservation:
-//
-//      P_A + P_T = P_B + P_1 + P_2
-//
-// No knockout dynamics.
-// No internal momentum distribution.
-// No cross section.
-// No detector acceptance.
-// No final-state interaction.
-//
-// Output:
-//   1. TH2D histograms: T_lab vs theta_lab for B, 1, 2
-//   2. Energy correlation histograms: T1 vs T2, TB vs T1, TB vs T2
-//   3. Angle correlation histograms: thetaB vs theta1, thetaB vs theta2, theta1 vs theta2
-//   4. Phi correlation histograms: phiB vs phi1, phiB vs phi2, phi1 vs phi2
-//   5. Delta-phi distributions: dphiB1, dphiB2, dphi12
-//   6. TTree containing event-by-event four-momentum information
-//   7. ROOT file: output/PureThreeBodyKinematics.root
-//
-// Drawing is handled separately by Draw.C.
-//
-// Units:
-//   Mass input: amu
-//   Energy output: MeV
-//   Momentum output: MeV/c
-//   Angle output: degree
+// 功能：对 A + T -> B + 1 + 2 反应生成纯相对论三体运动学事例，
+//       输出无顶部标题的运动学直方图和逐事例 TTree 至
+//       output/PureThreeBodyKinematics.root。
+// 方法：在总质心系中用两步两体衰变构造满足四动量守恒的末态，
+//       再 boost 到实验室系；能量-角度直方图用角度作横轴，含 T1 的
+//       动能-动能直方图用 T1 作横轴。
+// 注意事项：模型只包含三体相空间和四动量守恒，不包含反应动力学、截面、
+//           探测器接受度或末态相互作用；质量单位为 u，内部能量单位为 MeV，
+//           角度单位为 degree；直方图可见边缘受蒙卡统计和分箱影响，
+//           本文件不对分布做平滑或运动学边界提取。
 
 #include <iostream>
-#include <vector>
 #include <cmath>
-#include <limits>
 #include <algorithm>
 
 #include "TFile.h"
@@ -46,7 +20,6 @@
 #include "TTree.h"
 #include "TH1D.h"
 #include "TH2D.h"
-#include "TGraph.h"
 #include "TLorentzVector.h"
 #include "TVector3.h"
 #include "TRandom3.h"
@@ -249,21 +222,21 @@ void GenerateThreeBodyKinematics()
 
     TH2D* hB_TTheta = new TH2D(
         "hB_TTheta",
-        "Particle B allowed region;#theta_{B}^{lab} [deg];T_{B}^{lab} [MeV]",
+        ";#theta_{B}^{lab} [deg];T_{B}^{lab} [MeV]",
         NThetaBins, 0.0, 180.0,
         NEnergyBins, 0.0, TAxisMax
     );
 
     TH2D* h1_TTheta = new TH2D(
         "h1_TTheta",
-        "Particle 1 allowed region;#theta_{1}^{lab} [deg];T_{1}^{lab} [MeV]",
+        ";#theta_{1}^{lab} [deg];T_{1}^{lab} [MeV]",
         NThetaBins, 0.0, 180.0,
         NEnergyBins, 0.0, TAxisMax
     );
 
     TH2D* h2_TTheta = new TH2D(
         "h2_TTheta",
-        "Particle 2 allowed region;#theta_{2}^{lab} [deg];T_{2}^{lab} [MeV]",
+        ";#theta_{2}^{lab} [deg];T_{2}^{lab} [MeV]",
         NThetaBins, 0.0, 180.0,
         NEnergyBins, 0.0, TAxisMax
     );
@@ -271,21 +244,21 @@ void GenerateThreeBodyKinematics()
     // Energy-energy correlations.
     TH2D* hT1_T2 = new TH2D(
         "hT1_T2",
-        "Energy correlation;T_{1}^{lab} [MeV];T_{2}^{lab} [MeV]",
+        ";T_{1}^{lab} [MeV];T_{2}^{lab} [MeV]",
         NEnergyBins, 0.0, TAxisMax,
         NEnergyBins, 0.0, TAxisMax
     );
 
     TH2D* hTB_T1 = new TH2D(
         "hTB_T1",
-        "Energy correlation;T_{B}^{lab} [MeV];T_{1}^{lab} [MeV]",
+        ";T_{1}^{lab} [MeV];T_{B}^{lab} [MeV]",
         NEnergyBins, 0.0, TAxisMax,
         NEnergyBins, 0.0, TAxisMax
     );
 
     TH2D* hTB_T2 = new TH2D(
         "hTB_T2",
-        "Energy correlation;T_{B}^{lab} [MeV];T_{2}^{lab} [MeV]",
+        ";T_{B}^{lab} [MeV];T_{2}^{lab} [MeV]",
         NEnergyBins, 0.0, TAxisMax,
         NEnergyBins, 0.0, TAxisMax
     );
@@ -293,21 +266,21 @@ void GenerateThreeBodyKinematics()
     // Theta-theta correlations.
     TH2D* hThetaB_Theta1 = new TH2D(
         "hThetaB_Theta1",
-        "Angle correlation;#theta_{B}^{lab} [deg];#theta_{1}^{lab} [deg]",
+        ";#theta_{B}^{lab} [deg];#theta_{1}^{lab} [deg]",
         NThetaBins, 0.0, 180.0,
         NThetaBins, 0.0, 180.0
     );
 
     TH2D* hThetaB_Theta2 = new TH2D(
         "hThetaB_Theta2",
-        "Angle correlation;#theta_{B}^{lab} [deg];#theta_{2}^{lab} [deg]",
+        ";#theta_{B}^{lab} [deg];#theta_{2}^{lab} [deg]",
         NThetaBins, 0.0, 180.0,
         NThetaBins, 0.0, 180.0
     );
 
     TH2D* hTheta1_Theta2 = new TH2D(
         "hTheta1_Theta2",
-        "Angle correlation;#theta_{1}^{lab} [deg];#theta_{2}^{lab} [deg]",
+        ";#theta_{1}^{lab} [deg];#theta_{2}^{lab} [deg]",
         NThetaBins, 0.0, 180.0,
         NThetaBins, 0.0, 180.0
     );
@@ -315,21 +288,21 @@ void GenerateThreeBodyKinematics()
     // Phi-phi correlations.
     TH2D* hPhiB_Phi1 = new TH2D(
         "hPhiB_Phi1",
-        "Phi correlation;#phi_{B}^{lab} [deg];#phi_{1}^{lab} [deg]",
+        ";#phi_{B}^{lab} [deg];#phi_{1}^{lab} [deg]",
         NPhiBins, -180.0, 180.0,
         NPhiBins, -180.0, 180.0
     );
 
     TH2D* hPhiB_Phi2 = new TH2D(
         "hPhiB_Phi2",
-        "Phi correlation;#phi_{B}^{lab} [deg];#phi_{2}^{lab} [deg]",
+        ";#phi_{B}^{lab} [deg];#phi_{2}^{lab} [deg]",
         NPhiBins, -180.0, 180.0,
         NPhiBins, -180.0, 180.0
     );
 
     TH2D* hPhi1_Phi2 = new TH2D(
         "hPhi1_Phi2",
-        "Phi correlation;#phi_{1}^{lab} [deg];#phi_{2}^{lab} [deg]",
+        ";#phi_{1}^{lab} [deg];#phi_{2}^{lab} [deg]",
         NPhiBins, -180.0, 180.0,
         NPhiBins, -180.0, 180.0
     );
@@ -337,81 +310,24 @@ void GenerateThreeBodyKinematics()
     // Delta-phi distributions.
     TH1D* hDeltaPhiB1 = new TH1D(
         "hDeltaPhiB1",
-        "#Delta#phi_{B1};#Delta#phi_{B1}^{lab} [deg];",
+        ";#Delta#phi_{B1}^{lab} [deg];",
         NDphiBins, 0.0, 360.0
     );
 
     TH1D* hDeltaPhiB2 = new TH1D(
         "hDeltaPhiB2",
-        "#Delta#phi_{B2};#Delta#phi_{B2}^{lab} [deg];",
+        ";#Delta#phi_{B2}^{lab} [deg];",
         NDphiBins, 0.0, 360.0
     );
 
     TH1D* hDeltaPhi12 = new TH1D(
         "hDeltaPhi12",
-        "#Delta#phi_{12};#Delta#phi_{12}^{lab} [deg];",
+        ";#Delta#phi_{12}^{lab} [deg];",
         NDphiBins, 0.0, 360.0
     );
 
     // ------------------------------------------------------------
-    // 5. Envelopes: min/max kinetic energy at each theta bin
-    // ------------------------------------------------------------
-
-    vector<double> B_Tmin(NThetaBins,  numeric_limits<double>::max());
-    vector<double> B_Tmax(NThetaBins, -numeric_limits<double>::max());
-
-    vector<double> P1_Tmin(NThetaBins,  numeric_limits<double>::max());
-    vector<double> P1_Tmax(NThetaBins, -numeric_limits<double>::max());
-
-    vector<double> P2_Tmin(NThetaBins,  numeric_limits<double>::max());
-    vector<double> P2_Tmax(NThetaBins, -numeric_limits<double>::max());
-
-    auto FillEnvelope = [&](vector<double>& vmin,
-                            vector<double>& vmax,
-                            double theta_deg,
-                            double T_lab)
-    {
-        if (theta_deg < 0.0 || theta_deg >= 180.0) return;
-
-        int bin = int(theta_deg / 180.0 * NThetaBins);
-        if (bin < 0 || bin >= NThetaBins) return;
-
-        if (T_lab < vmin[bin]) vmin[bin] = T_lab;
-        if (T_lab > vmax[bin]) vmax[bin] = T_lab;
-    };
-
-    auto MakeEnvelopeGraph = [&](const char* name,
-                                 const vector<double>& v,
-                                 bool isMin)
-    {
-        TGraph* g = new TGraph();
-        g->SetName(name);
-
-        int ip = 0;
-
-        for (int i = 0; i < NThetaBins; ++i) {
-            double val = v[i];
-
-            bool valid = false;
-
-            if (isMin) {
-                valid = (val < numeric_limits<double>::max() / 10.0);
-            } else {
-                valid = (val > -numeric_limits<double>::max() / 10.0);
-            }
-
-            if (!valid) continue;
-
-            double theta_center = (i + 0.5) * 180.0 / NThetaBins;
-            g->SetPoint(ip, theta_center, val);
-            ip++;
-        }
-
-        return g;
-    };
-
-    // ------------------------------------------------------------
-    // 6. Output TTree
+    // 5. Output TTree
     // ------------------------------------------------------------
 
     TFile* fout = new TFile(OutputFileName, "RECREATE");
@@ -477,7 +393,7 @@ void GenerateThreeBodyKinematics()
     tree->Branch("dP_cons", &dP_cons, "dP_cons/D");
 
     // ------------------------------------------------------------
-    // 7. Three-body event generation
+    // 6. Three-body event generation
     // ------------------------------------------------------------
 
     TRandom3 rng(RandomSeed);
@@ -496,14 +412,14 @@ void GenerateThreeBodyKinematics()
     for (Long64_t iev = 0; iev < NEvents; ++iev) {
 
         // --------------------------------------------------------
-        // 7.1 Randomly choose the invariant mass of X = B + 2
+        // 6.1 Randomly choose the invariant mass of X = B + 2
         // --------------------------------------------------------
 
         MX2 = MX2_min + rng.Rndm() * (MX2_max - MX2_min);
         MX  = sqrt(MX2);
 
         // --------------------------------------------------------
-        // 7.2 First two-body step in total CM:
+        // 6.2 First two-body step in total CM:
         //
         //     Ptot -> 1 + X
         // --------------------------------------------------------
@@ -520,7 +436,7 @@ void GenerateThreeBodyKinematics()
         TLorentzVector PX_cm(pX_cm_vec, EX_cm);
 
         // --------------------------------------------------------
-        // 7.3 Second two-body step in X rest frame:
+        // 6.3 Second two-body step in X rest frame:
         //
         //     X -> B + 2
         // --------------------------------------------------------
@@ -546,7 +462,7 @@ void GenerateThreeBodyKinematics()
         P2_cm.Boost(betaX_to_cm);
 
         // --------------------------------------------------------
-        // 7.4 Boost all final particles from total CM to lab
+        // 6.4 Boost all final particles from total CM to lab
         // --------------------------------------------------------
 
         TLorentzVector PB_lab = PB_cm;
@@ -558,7 +474,7 @@ void GenerateThreeBodyKinematics()
         P2_lab_vec4.Boost(betaCM_to_lab);
 
         // --------------------------------------------------------
-        // 7.5 Check four-momentum conservation
+        // 6.5 Check four-momentum conservation
         // --------------------------------------------------------
 
         TLorentzVector Psum_lab = PB_lab + P1_lab_vec4 + P2_lab_vec4;
@@ -570,7 +486,7 @@ void GenerateThreeBodyKinematics()
         if (dP_cons > max_dP) max_dP = dP_cons;
 
         // --------------------------------------------------------
-        // 7.6 Extract lab kinetic energies and angles
+        // 6.6 Extract lab kinetic energies and angles
         // --------------------------------------------------------
 
         EB_lab = PB_lab.E();
@@ -610,7 +526,7 @@ void GenerateThreeBodyKinematics()
         P2z_lab = P2_lab_vec4.Pz();
 
         // --------------------------------------------------------
-        // 7.7 Optional phase-space density weight
+        // 6.7 Optional phase-space density weight
         // --------------------------------------------------------
         //
         // Up to an irrelevant constant:
@@ -628,7 +544,7 @@ void GenerateThreeBodyKinematics()
         if (UsePhaseSpaceWeightInHist) fillWeight = eventWeight;
 
         // --------------------------------------------------------
-        // 7.8 Fill histograms and tree
+        // 6.8 Fill histograms and tree
         // --------------------------------------------------------
 
         hB_TTheta->Fill(thetaB_lab, TB_lab, fillWeight);
@@ -636,7 +552,7 @@ void GenerateThreeBodyKinematics()
         h2_TTheta->Fill(theta2_lab, T2_lab, fillWeight);
 
         hT1_T2->Fill(T1_lab, T2_lab, fillWeight);
-        hTB_T1->Fill(TB_lab, T1_lab, fillWeight);
+        hTB_T1->Fill(T1_lab, TB_lab, fillWeight);
         hTB_T2->Fill(TB_lab, T2_lab, fillWeight);
 
         hThetaB_Theta1->Fill(thetaB_lab, theta1_lab, fillWeight);
@@ -650,10 +566,6 @@ void GenerateThreeBodyKinematics()
         hDeltaPhiB1->Fill(dphiB1_lab, fillWeight);
         hDeltaPhiB2->Fill(dphiB2_lab, fillWeight);
         hDeltaPhi12->Fill(dphi12_lab, fillWeight);
-
-        FillEnvelope(B_Tmin,  B_Tmax,  thetaB_lab, TB_lab);
-        FillEnvelope(P1_Tmin, P1_Tmax, theta1_lab, T1_lab);
-        FillEnvelope(P2_Tmin, P2_Tmax, theta2_lab, T2_lab);
 
         tree->Fill();
 
@@ -669,36 +581,7 @@ void GenerateThreeBodyKinematics()
     cout << "==================================================" << endl;
 
     // ------------------------------------------------------------
-    // 8. Build envelope graphs
-    // ------------------------------------------------------------
-
-    TGraph* gB_Tmin  = MakeEnvelopeGraph("gB_Tmin",  B_Tmin,  true);
-    TGraph* gB_Tmax  = MakeEnvelopeGraph("gB_Tmax",  B_Tmax,  false);
-
-    TGraph* g1_Tmin  = MakeEnvelopeGraph("g1_Tmin",  P1_Tmin, true);
-    TGraph* g1_Tmax  = MakeEnvelopeGraph("g1_Tmax",  P1_Tmax, false);
-
-    TGraph* g2_Tmin  = MakeEnvelopeGraph("g2_Tmin",  P2_Tmin, true);
-    TGraph* g2_Tmax  = MakeEnvelopeGraph("g2_Tmax",  P2_Tmax, false);
-
-    auto SetGraphStyle = [](TGraph* g, int color, int style) {
-        if (!g) return;
-        g->SetLineColor(color);
-        g->SetLineWidth(2);
-        g->SetLineStyle(style);
-    };
-
-    SetGraphStyle(gB_Tmin, kRed, 2);
-    SetGraphStyle(gB_Tmax, kRed, 1);
-
-    SetGraphStyle(g1_Tmin, kRed, 2);
-    SetGraphStyle(g1_Tmax, kRed, 1);
-
-    SetGraphStyle(g2_Tmin, kRed, 2);
-    SetGraphStyle(g2_Tmax, kRed, 1);
-
-    // ------------------------------------------------------------
-    // 9. Write output ROOT file
+    // 7. Write output ROOT file
     // ------------------------------------------------------------
 
     fout->cd();
@@ -726,15 +609,6 @@ void GenerateThreeBodyKinematics()
     hDeltaPhiB1->Write();
     hDeltaPhiB2->Write();
     hDeltaPhi12->Write();
-
-    gB_Tmin->Write();
-    gB_Tmax->Write();
-
-    g1_Tmin->Write();
-    g1_Tmax->Write();
-
-    g2_Tmin->Write();
-    g2_Tmax->Write();
 
     fout->Close();
 
