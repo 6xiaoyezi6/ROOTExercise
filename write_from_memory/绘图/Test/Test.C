@@ -1,7 +1,7 @@
 /*
- * 功能：读取微分截面与接受度 CSV 数据，绘制包含基态和第一激发态的上下两幅子图，并输出 Test.pdf。
- * 方法：上图用 TGraphErrors 绘制实验室系微分截面及 Y 误差，下图用 TGraph 绘制角度区间中心对应的 Acceptance。
- * 注意事项：CrossSection1/error1 对应基态，CrossSection2/error2 对应第一激发态；三个输入文件使用固定绝对路径。
+ * 功能：读取微分截面与接受度 CSV 数据，绘制共享横轴且上下对齐的两幅子图，并输出 Test.pdf。
+ * 方法：上图用 TGraphErrors 绘制微分截面及 Y 误差，下图用 TGraph 绘制 Acceptance；统一 pad 边距和 X 轴，并按 pad 边距动态放置紧凑图例与面板编号。
+ * 注意事项：CrossSection1/error1 对应基态，CrossSection2/error2 对应第一激发态；输入使用固定绝对路径，运行时会覆盖原有 Test.pdf。
  */
 
 #include "TCanvas.h"
@@ -14,6 +14,7 @@
 #include "TLegend.h"
 #include "TPad.h"
 #include "TStyle.h"
+#include "TString.h"
 
 #include <algorithm>
 #include <fstream>
@@ -31,6 +32,11 @@ const char *kExcitedStateAcceptanceFile =
     "/Users/yemingxin/ROOT_Exercise/write_from_memory/绘图/Test/SolidAngle_ex.csv";
 const char *kOutputFile =
     "/Users/yemingxin/ROOT_Exercise/write_from_memory/绘图/Test/Test.pdf";
+constexpr Double_t kPanelInset = 0.02;
+constexpr Double_t kLegendWidth = 0.30;
+constexpr Double_t kLegendEntryHeight = 0.055;
+constexpr Double_t kLegendTextSize = 0.047;
+constexpr Int_t kLegendEntryCount = 2;
 
 // 读取微分截面 CSV，并分别保存基态和第一激发态的数值及 Y 误差。
 Bool_t ReadCrossSections(std::vector<Double_t> &angles,
@@ -171,15 +177,22 @@ void ConfigureGraph(TGraph *graph, Int_t markerStyle, Color_t color)
     graph->SetLineWidth(1);
 }
 
-// 在当前子图中绘制基态和第一激发态的图例及面板编号。
-void DrawAnnotations(TGraph *groundGraph, TGraph *excitedGraph,
-                     const char *panelText)
+// 根据 pad 边距在左上角绘制紧凑图例，并在右上角绘制顺序面板编号。
+void DrawAnnotations(TPad *pad, TGraph *groundGraph, TGraph *excitedGraph,
+                     Int_t panelIndex)
 {
-    TLegend *legend = new TLegend(0.20, 0.68, 0.49, 0.88);
+    const Double_t legendLeft = pad->GetLeftMargin() + kPanelInset;
+    const Double_t annotationTop =
+        1.0 - pad->GetTopMargin() - kPanelInset;
+    TLegend *legend = new TLegend(
+        legendLeft,
+        annotationTop - kLegendEntryHeight * kLegendEntryCount,
+        legendLeft + kLegendWidth, annotationTop);
     legend->SetBorderSize(0);
     legend->SetFillStyle(0);
     legend->SetTextFont(42);
-    legend->SetTextSize(0.055);
+    legend->SetTextSize(kLegendTextSize);
+    legend->SetEntrySeparation(0.0);
     legend->AddEntry(groundGraph, "g.s.   0^{+}", "p");
     legend->AddEntry(excitedGraph, "3.368 MeV   2^{+}", "p");
     legend->Draw();
@@ -188,8 +201,9 @@ void DrawAnnotations(TGraph *groundGraph, TGraph *excitedGraph,
     panel.SetNDC();
     panel.SetTextFont(42);
     panel.SetTextSize(0.070);
-    panel.SetTextAlign(22);
-    panel.DrawLatex(0.87, 0.84, panelText);
+    panel.SetTextAlign(33);
+    panel.DrawLatex(1.0 - pad->GetRightMargin() - kPanelInset,
+                    annotationTop, Form("(%c)", 'a' + panelIndex));
 }
 
 // 在画布左侧分别绘制微分截面和接受度的 Y 轴标题。
@@ -257,9 +271,9 @@ void Test()
     gStyle->SetLineWidth(2);
     TGaxis::SetMaxDigits(3);
 
-    TCanvas *canvas = new TCanvas("canvasTest", "Cross section and acceptance", 650, 650);
-    canvas->SetFillColor(kWhite);
-    canvas->SetBorderMode(0);
+    TCanvas *c1 = new TCanvas("c1", "c1", 650, 650);
+    c1->SetFillColor(kWhite);
+    c1->SetBorderMode(0);
 
     TPad *upperPad = new TPad("upperPadTest", "", 0.0, 0.500, 1.0, 1.000);
     TPad *lowerPad = new TPad("lowerPadTest", "", 0.0, 0.000, 1.0, 0.502);
@@ -268,34 +282,36 @@ void Test()
     upperPad->Draw();
     lowerPad->Draw();
 
-    TH1D *upperFrame = new TH1D("upperFrameTest", "", 410, 40.0, 81.0);
-    ConfigureFrame(upperFrame, kFALSE);
-    upperFrame->SetMinimum(5e-4);
-    upperFrame->SetMaximum(10.0);
-    upperFrame->GetYaxis()->SetNdivisions(505);
+    TH1D *h1 = new TH1D("h1", "", 410, 40.0, 81.0);
+    ConfigureFrame(h1, kFALSE);
+    h1->SetMinimum(5e-4);
+    h1->SetMaximum(10.0);
+    h1->GetYaxis()->SetNdivisions(505);
     upperPad->cd();
-    upperFrame->Draw("AXIS");
+    h1->Draw("AXIS");
     groundCrossSectionGraph->Draw("P E1 SAME");
     excitedCrossSectionGraph->Draw("P E1 SAME");
-    DrawAnnotations(groundCrossSectionGraph, excitedCrossSectionGraph, "(a)");
+    DrawAnnotations(upperPad, groundCrossSectionGraph,
+                    excitedCrossSectionGraph, 0);
     upperPad->RedrawAxis();
 
-    TH1D *lowerFrame = new TH1D("lowerFrameTest", "", 410, 40.0, 81.0);
-    ConfigureFrame(lowerFrame, kTRUE);
-    lowerFrame->SetMinimum(0.0);
-    lowerFrame->SetMaximum(0.12);
-    lowerFrame->GetYaxis()->SetNdivisions(506, kFALSE);
-    lowerFrame->GetYaxis()->ChangeLabel(-1, -1, 0.0);
+    TH1D *h2 = new TH1D("h2", "", 410, 40.0, 81.0);
+    ConfigureFrame(h2, kTRUE);
+    h2->SetMinimum(0.0);
+    h2->SetMaximum(0.12);
+    h2->GetYaxis()->SetNdivisions(506, kFALSE);
+    h2->GetYaxis()->ChangeLabel(-1, -1, 0.0);
     lowerPad->cd();
-    lowerFrame->Draw("AXIS");
+    h2->Draw("AXIS");
     groundAcceptanceGraph->Draw("P SAME");
     excitedAcceptanceGraph->Draw("P SAME");
-    DrawAnnotations(groundAcceptanceGraph, excitedAcceptanceGraph, "(b)");
+    DrawAnnotations(lowerPad, groundAcceptanceGraph,
+                    excitedAcceptanceGraph, 1);
     lowerPad->RedrawAxis();
 
-    canvas->cd();
+    c1->cd();
     DrawYAxisTitles();
-    canvas->Modified();
-    canvas->Update();
-    canvas->SaveAs(kOutputFile);
+    c1->Modified();
+    c1->Update();
+    c1->SaveAs(kOutputFile);
 }
