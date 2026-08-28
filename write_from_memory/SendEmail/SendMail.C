@@ -11,7 +11,7 @@ void SendMail()
 {
     Timer timer;
     std::string sender    = "2310539989@qq.com";
-    std::string recipient = "liangxiao@sinap.ac.cn";
+    std::string recipient = "yemingxin@sinap.ac.cn";
     std::string code      = "mfdvcttlxwlfebcd";
     std::string png       = "/Users/yemingxin/Desktop/截屏2026-07-26 22.05.39.png";
     std::string pdf       = "/Users/yemingxin/Downloads/IWND2026日程安排.pdf";
