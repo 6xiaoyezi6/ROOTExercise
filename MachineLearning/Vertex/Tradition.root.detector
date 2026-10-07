@@ -1,0 +1,469 @@
+% 功能：配置 myTOGAXSI_ppalpha 的靶、虚拟面、SSD 与 GAGG 几何。
+% 方法：按已有各探测器位置建立几何；RecoilGAGG 用七位 Optical 开关选择双端光学晶体。
+% 注意事项：原有 z 坐标已减去 82 mm；Optical 默认全关，开启时需 OpticalPhysics=1。
+%所有的z坐标都减去了82mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Target
+ THICKNESS= 150 mm
+ RADIUS= 15.5 mm
+ MATERIAL= LH2
+ ANGLE= 0 deg
+ NbSlices= 200
+ X= 0 mm
+ Y= 0 mm
+ Z= 0 mm
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+VirtualPlane
+ Type = VirtualBDC
+ Z = -150 mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%VirtualPlane
+ Type = VirtualFDC2Front
+ POS = -6500 0 6500 mm
+ ANGLE = 30 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%VirtualPlane
+ Type = VirtualFDC2Back
+ POS = -6750 0 6933.0127019 mm
+ ANGLE = 30 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%HODOScope
+ Type= HODP
+ POS= -3500 0 9250 mm
+ ANGLE= 30 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%HODOScope
+ Type= HODF
+ POS= -6200 0 7750 mm
+ ANGLE= 30 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Samurai
+ POS= 0 0 3900 mm
+ ANGLE= 30 deg
+% %
+ METHOD= 0				
+% % 0=RungeKutta, 1=EliaOmar
+ FIELDMAP= field_map/180628-2,20T-3000.table.bin
+ %FIELDMAP= field_map/141113-0,5T-3000.table.bin
+ %FIELDMAP= field_map/180626-1,00T-3000.table.bin
+% % fieldmap path
+ STEPS_PER_METER= 1000
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% RecoilSSD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%% LD %%%%%%%%%%%%%%%%%%%%%%%%%
+RecoilSSD
+ Type=RecoilSiLDX1
+ POS= 51.96 -30 42.85 mm
+ ROT= -60 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiLDX2
+ POS= 77.94 -45 73.9 mm
+ ROT= -60 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiLDY1
+ POS= 86.6 -50 80.9 mm
+ ROT= -60 0 0 deg
+
+%%%%%%%%%%%%%%%%%%%%%% LU %%%%%%%%%%%%%%%%%%%%%%%%%
+RecoilSSD
+ Type=RecoilSiLUX1
+ POS= 51.96 30 42.85 mm
+ ROT= -120 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiLUX2
+ POS= 77.94 45 73.9 mm
+ ROT= -120 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiLUY1
+ POS= 86.6 50 80.9 mm
+ ROT= -120 0 0 deg
+
+%%%%%%%%%%%%%%%%%%%%%% RU %%%%%%%%%%%%%%%%%%%%%%%%%
+RecoilSSD
+ Type=RecoilSiRUX1
+ POS= -51.96 30 42.85 mm
+ ROT= 120 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiRUX2
+ POS= -77.94 45 73.9 mm
+ ROT= 120 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiRUY1
+ POS= -86.6 50 80.9 mm
+ ROT= 120 0 0 deg
+
+%%%%%%%%%%%%%%%%%%%%%% RD %%%%%%%%%%%%%%%%%%%%%%%%%
+RecoilSSD 
+ Type=RecoilSiRDX1
+ POS= -51.96 -30 42.85 mm
+ ROT= 60 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiRDX2
+ POS= -77.94 -45 73.9 mm
+ ROT= 60 0 0 deg
+
+RecoilSSD
+ Type=RecoilSiRDY1
+ POS= -86.6 -50 80.9 mm
+ ROT= 60 0 0 deg
+
+%%%%%%%%%%%%%%%%%%%%%% D %%%%%%%%%%%%%%%%%%%%%%%%%
+%RecoilSSD 
+ Type=RecoilSiDOWNX1
+ POS= 0 -60 42.85 mm
+ ROT= 0 0 0 deg
+
+%RecoilSSD
+ Type=RecoilSiDOWNX2
+ POS= 0 -90 73.9 mm
+ ROT= 0 0 0 deg
+
+%RecoilSSD
+ Type=RecoilSiDOWNY1
+ POS= 0 -100 80.9 mm
+ ROT= 0 0 0 deg
+
+%%%%%%%%%%%%%%%%%%%%%% U %%%%%%%%%%%%%%%%%%%%%%%%%
+%RecoilSSD 
+ Type=RecoilSiUPX1
+ POS= 0 60 42.85 mm
+ ROT= 0 0 0 deg
+
+%RecoilSSD
+ Type=RecoilSiUPX2
+ POS= 0 90 73.9 mm
+ ROT= 0 0 0 deg
+
+%RecoilSSD
+ Type=RecoilSiUPY1
+ POS= 0 100 80.9 mm
+ ROT= 0 0 0 deg
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% RecoilGAGG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 功能：以下 RecoilGAGG 每组七根晶体可逐根开启双端光学读出。
+% 方法：Optical 的七个 0/1 依次对应晶体 1..7；开启前将本项目 PhysicsListOption.txt 的 OpticalPhysics 设为 1。
+% 注意事项：默认全关，带电粒子在晶体内的路程仍写入 LengthInGAGG，单位 mm。
+RecoilGAGG
+ Type = RecoilGAGGLD
+ POS = 138.56 -80 116 mm
+ ROT = -60 0 0 deg
+ Optical = 0 0 0 0 0 0 0
+
+RecoilGAGG
+ Type = RecoilGAGGLU
+ POS = 138.56 80 116 mm
+ ROT = -120 0 0 deg
+ Optical = 0 0 0 0 0 0 0
+
+RecoilGAGG
+ Type = RecoilGAGGRU
+ POS = -138.56 80 116 mm
+ ROT = 120 0 0 deg
+ Optical = 0 0 0 0 0 0 0
+
+RecoilGAGG
+ Type = RecoilGAGGRD
+ POS = -138.56 -80 116 mm
+ ROT = 60 0 0 deg
+ Optical = 0 0 0 0 0 0 0
+
+%RecoilGAGG
+ Type = RecoilGAGGDOWN
+ POS = 0 -160 116 mm
+ ROT = 0 0 0 deg
+
+%RecoilGAGG
+ Type = RecoilGAGGUP
+ POS = 0 160 116 mm
+ ROT = 180 0 0 deg
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% ClusterSSD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ClusterSSD   
+ Type=ClusterSiRX1
+ POS= -83.46 1.8 226.8 mm
+ ROT= 0 0 0 deg
+
+ClusterSSD  
+ Type=ClusterSiRY1
+ POS= -84 1.8 231.3 mm
+ ROT= 0 0 0 deg
+
+ClusterSSD  
+ Type=ClusterSiLX1
+ POS= 83.46 1.8 226.8 mm
+ ROT= 0 0 0 deg
+
+ClusterSSD  
+ Type=ClusterSiLY1
+ POS= 84 1.8 231.3 mm
+ ROT= 0 0 0 deg
+
+ClusterSSD  
+ Type=ClusterSiRX2
+ POS= -90.48 1.8 285.5 mm
+ ROT= 0 0 0 deg
+
+ClusterSSD  
+ Type=ClusterSiRY2
+ POS= -91 1.8 290 mm
+ ROT= 0 0 0 deg
+
+ClusterSSD  
+ Type=ClusterSiLX2
+ POS= 90.48 1.8 285.5 mm
+ ROT= 0 0 0 deg
+
+ClusterSSD  
+ Type=ClusterSiLY2
+ POS= 91 1.8 290 mm
+ ROT= 0 0 0 deg
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% ClusterGAGG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Cluster_GAGG 上1 %%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -190 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -152 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -114 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -76 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -38 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 0 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 38 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 76 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 114 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 152 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 190 57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%% Cluster_GAGG 中间俩 %%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -209 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -171 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -133 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -95 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -57 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 57 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 95 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 133 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 171 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 209 19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% 对称的下半部分 %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%Cluster_GAGG 中间俩 %%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -209 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -171 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -133 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -95 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -57 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 57 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 95 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 133 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 171 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 209 -19 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%. Cluster_GAGG 上1 %%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -190 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -152 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -114 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -76 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= -38 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 0 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 38 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 76 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 114 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 152 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+    POS= 190 -57 400 mm
+    Name= Cluster_GAGG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% DeltaE_GAGG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= 57 0 317.5 mm
+ Name= DeltaEGAGGL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= 94 0 317.5 mm
+ Name= DeltaEGAGGL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= 131 0 317.5 mm
+ Name= DeltaEGAGGL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= 168 0 317.5 mm
+ Name= DeltaEGAGGL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= -57 0 317.5 mm
+ Name= DeltaEGAGGR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= -94 0 317.5 mm
+ Name= DeltaEGAGGR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= -131 0 317.5 mm
+ Name= DeltaEGAGGR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ClusterGAGG
+ POS= -168 0 317.5 mm
+ Name= DeltaEGAGGR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
