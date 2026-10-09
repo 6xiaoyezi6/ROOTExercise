@@ -7,9 +7,9 @@
  * 注意事项：所有位置单位 mm；每个原始事件最多输出一行，多击中、错配和无效值被排除。
  *           TrackID 只在各自粒子的层之间匹配，alpha 与 proton 不要求同一 TrackID。
  *           不使用 GAGG 或传统顶点重建成功条件；不使用真实击中坐标作为输入。
- *           输入默认复用 ../EnergyLoss/alphap.root 与 alphap_test.root，输出仅写本宏目录。
+ *           输入为本宏目录内当前 TOGAXSI 生成的 alphap.root 与 alphap_test.root，输出仅写本宏目录。
  *           EventID 取 SSD hit 的模拟事件号，在各输入文件内唯一；两文件的 ID 不混用。
- *           输出使用 RECREATE；依赖本机 legacy NPTool 数据字典；本文件交付时未编译运行。
+ *           输出使用 RECREATE；依赖本机 NPTool 数据字典；训练与测试必须使用同一模拟响应和不同种子。
  */
 R__ADD_INCLUDE_PATH(/Users/yemingxin/nptool/NPLib/include)
 R__LOAD_LIBRARY(/Users/yemingxin/nptool/NPLib/lib/libNPClusterSSD.dylib)
@@ -197,8 +197,8 @@ static void ProcessVertexFile(const char* inputPath, const char* outputPath)
 void PreProcess()
 {
   TString vertexDir = gSystem->DirName(__FILE__);
-  TString trainInput = vertexDir + "/../EnergyLoss/alphap.root";
-  TString testInput = vertexDir + "/../EnergyLoss/alphap_test.root";
+  TString trainInput = vertexDir + "/alphap.root";
+  TString testInput = vertexDir + "/alphap_test.root";
   TString trainOutput = vertexDir + "/Processd.root";
   TString testOutput = vertexDir + "/Processd_test.root";
   ProcessVertexFile(trainInput.Data(), trainOutput.Data());

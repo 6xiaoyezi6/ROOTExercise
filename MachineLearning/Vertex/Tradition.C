@@ -1,5 +1,5 @@
 /*
- * 功能：遍历 alphap.root/alphap_test.root 的所有事件，直接从 SSD 条带坐标重建
+ * 功能：遍历本宏目录中当前 TOGAXSI 生成的 alphap.root/alphap_test.root，直接从 SSD 条带坐标重建
  *       世界顶点，只将成功事件写入 Tradition.root/Tradition_test.root，保留 EventID。
  * 方法：与 PreProcess 相同的七层同轨迹 alpha-proton 和左右配对选择；仿照
  *       ReconstrucionTOGAXSI_Hits.C，Cluster 两投影拟合→Recoil 局域系→与
@@ -10,7 +10,7 @@
  *           真实世界顶点只作评估标签和残差计算；Recoil Y1 不参与几何求交。
  *           不额外施加 GAGG/能损/运动学筛选；无效、多击中、错配和拟合失败跳过。
  *           输出及配置快照覆盖同名文件；输入错误报错返回，不当作成功重建。
- *           依赖本机 legacy NPTool 字典和 ROOT；交付时未编译、未运行。
+ *           依赖本机 NPTool 字典和 ROOT；训练与测试必须使用同一模拟响应和不同随机种子。
  */
 R__ADD_INCLUDE_PATH(/Users/yemingxin/nptool/NPLib/include)
 R__LOAD_LIBRARY(/Users/yemingxin/nptool/NPLib/lib/libNPCore.dylib)
@@ -248,8 +248,8 @@ void Process(const TString& rawPath, const TString& outputPath) {
 void Tradition() {
   const TString dir = gSystem->DirName(__FILE__);
   try {
-    VertexTradition::Process(dir + "/../EnergyLoss/alphap.root", dir + "/Tradition.root");
-    VertexTradition::Process(dir + "/../EnergyLoss/alphap_test.root", dir + "/Tradition_test.root");
+    VertexTradition::Process(dir + "/alphap.root", dir + "/Tradition.root");
+    VertexTradition::Process(dir + "/alphap_test.root", dir + "/Tradition_test.root");
   } catch (const std::exception& error) {
     std::cerr << "Tradition stopped: " << error.what() << std::endl;
   }

@@ -1,0 +1,38 @@
+{
+  "training": {
+    "events": 21768,
+    "RMSE_MeV": 1.4857926271766413,
+    "MAE_MeV": 1.1364248773864603,
+    "Bias_MeV": -0.024938164958872026,
+    "ResidualStd_MeV": 1.4855833261385742,
+    "R2": 0.998598090673567,
+    "AbsErrorQ95_MeV": 2.977781993799107,
+    "MaxAbsError_MeV": 16.086306286659237,
+    "Outside20MeV": 0,
+    "Outside100MeV": 0
+  },
+  "internal_test": {
+    "events": 5442,
+    "RMSE_MeV": 1.9496274423350808,
+    "MAE_MeV": 1.3528037207266688,
+    "Bias_MeV": 0.00568416319219965,
+    "ResidualStd_MeV": 1.9496191561930327,
+    "R2": 0.9975418592213741,
+    "AbsErrorQ95_MeV": 3.3917450909548323,
+    "MaxAbsError_MeV": 33.564491367225514,
+    "Outside20MeV": 4,
+    "Outside100MeV": 0
+  },
+  "external_test": {
+    "events": 13671,
+    "RMSE_MeV": 3.502560053437605,
+    "MAE_MeV": 1.4031822072147841,
+    "Bias_MeV": -0.05698139629694333,
+    "ResidualStd_MeV": 3.5020965218584266,
+    "R2": 0.9920834112340589,
+    "AbsErrorQ95_MeV": 3.3202062612750183,
+    "MaxAbsError_MeV": 163.10409133994312,
+    "Outside20MeV": 16,
+    "Outside100MeV": 5
+  }
+}

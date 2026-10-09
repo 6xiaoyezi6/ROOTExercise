@@ -1,11 +1,13 @@
 /*
- * 功能：从 alphap.root 的 SimulatedTree 筛选前向 alpha 单击中事件，写入 Processd.root/tree。
+ * 功能：依次从 alphap.root 和 alphap_test.root 的 SimulatedTree 筛选前向 alpha 单击中事件，
+ *       分别写入 Processd.root/tree 和 Processd_test.root/tree。
  * 方法：四层 ClusterSSD 各保留一个 hit，要求同侧、同一 TrackID，并匹配唯一主 ClusterGAGG hit；
  *       汇总同一 alpha 轨迹的 DeltaE GAGG 能量，提取真实 SSD 世界坐标、顶点和顶点总动能。
  * 注意事项：能量为 MeV，坐标为 mm；位置与标签均为模拟真值。排除多击中和无效值。
  *           主 GAGG 与 DeltaE GAGG 能量分别保存；无匹配 DeltaE hit 时 DeltaEGAGGEnergy 为 0。
  *           DeltaE 可有多个匹配 hit，其能量求和；不额外要求 DeltaE 单击中。
- *           在当前目录运行；输出文件以 RECREATE 写入。依赖本机 legacy NPTool 数据字典。
+ *           在 EnergyLoss 目录运行；每份输入使用独立的树和计数器，输出文件以 RECREATE 写入。
+ *           依赖本机 legacy NPTool 数据字典。
  */
 
 R__ADD_INCLUDE_PATH(/Users/yemingxin/nptool/NPLib/include)
@@ -21,11 +23,12 @@ R__LOAD_LIBRARY(/Users/yemingxin/nptool/NPLib/lib/libNPReactionConditions.dylib)
 #include <cmath>
 #include <iostream>
 
-void PreProcess()
+static void ProcessEnergyLossFile(const char* inputPath, const char* outputPath)
 {
   const Double_t kInvalidValue = -999.0;
 
-  TFile* f = TFile::Open("alphap_test.root", "READ");
+  std::cout << "Processing: " << inputPath << " -> " << outputPath << std::endl;
+  TFile* f = TFile::Open(inputPath, "READ");
   TTree* inputTree = (TTree*)f->Get("SimulatedTree");
 
   TClusterSSDData* clusterSSD = nullptr;
@@ -36,7 +39,7 @@ void PreProcess()
   inputTree->SetBranchAddress("ClusterGAGG", &clusterGAGG);
   inputTree->SetBranchAddress("ReactionConditions", &reaction);
 
-  TFile* outputFile = new TFile("Processd_test.root", "RECREATE");
+  TFile* outputFile = new TFile(outputPath, "RECREATE");
   TTree* outputTree = new TTree("tree", "Forward alpha single-hit truth samples; energy MeV, position mm");
   Double_t ClusterGAGGEnergy, DeltaEGAGGEnergy;
   Double_t ClusterSSDX1, ClusterSSDY1, ClusterSSDX2, ClusterSSDY2;
@@ -180,4 +183,10 @@ void PreProcess()
   f->Close();
   delete outputFile;
   delete f;
+}
+
+void PreProcess()
+{
+  ProcessEnergyLossFile("alphap.root", "Processd.root");
+  ProcessEnergyLossFile("alphap_test.root", "Processd_test.root");
 }

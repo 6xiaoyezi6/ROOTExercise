@@ -1,0 +1,84 @@
+{
+  "before": {
+    "training": {
+      "events": 21768,
+      "RMSE_MeV": 1.4857926271766413,
+      "MAE_MeV": 1.1364248773864603,
+      "Bias_MeV": -0.024938164958872026,
+      "ResidualStd_MeV": 1.4855833261385742,
+      "R2": 0.998598090673567,
+      "AbsErrorQ95_MeV": 2.977781993799107,
+      "MaxAbsError_MeV": 16.086306286659237,
+      "Outside20MeV": 0,
+      "Outside100MeV": 0
+    },
+    "internal_test": {
+      "events": 5442,
+      "RMSE_MeV": 1.9496274423350808,
+      "MAE_MeV": 1.3528037207266688,
+      "Bias_MeV": 0.00568416319219965,
+      "ResidualStd_MeV": 1.9496191561930327,
+      "R2": 0.9975418592213741,
+      "AbsErrorQ95_MeV": 3.3917450909548323,
+      "MaxAbsError_MeV": 33.564491367225514,
+      "Outside20MeV": 4,
+      "Outside100MeV": 0
+    },
+    "external_test": {
+      "events": 13671,
+      "RMSE_MeV": 3.502560053437605,
+      "MAE_MeV": 1.4031822072147841,
+      "Bias_MeV": -0.05698139629694333,
+      "ResidualStd_MeV": 3.5020965218584266,
+      "R2": 0.9920834112340589,
+      "AbsErrorQ95_MeV": 3.3202062612750183,
+      "MaxAbsError_MeV": 163.10409133994312,
+      "Outside20MeV": 16,
+      "Outside100MeV": 5
+    }
+  },
+  "after": {
+    "training": {
+      "events": 21768,
+      "RMSE_MeV": 1.5217228981300077,
+      "MAE_MeV": 1.1455651104794056,
+      "Bias_MeV": -0.025561325905778323,
+      "ResidualStd_MeV": 1.521508198239868,
+      "R2": 0.998529467326416,
+      "AbsErrorQ95_MeV": 2.9853934125229444,
+      "MaxAbsError_MeV": 29.669717253416252,
+      "Outside20MeV": 3,
+      "Outside100MeV": 0
+    },
+    "internal_test": {
+      "events": 5442,
+      "RMSE_MeV": 2.206122158047525,
+      "MAE_MeV": 1.3595476433623004,
+      "Bias_MeV": 0.004981160467317273,
+      "ResidualStd_MeV": 2.206116534607514,
+      "R2": 0.9968525227018429,
+      "AbsErrorQ95_MeV": 3.3433788471694905,
+      "MaxAbsError_MeV": 67.8229362338111,
+      "Outside20MeV": 6,
+      "Outside100MeV": 0
+    },
+    "external_test": {
+      "events": 13671,
+      "RMSE_MeV": 2.2350725545261443,
+      "MAE_MeV": 1.3552346138043503,
+      "Bias_MeV": -0.0009869685180780205,
+      "ResidualStd_MeV": 2.2350723366122107,
+      "R2": 0.9967763331253634,
+      "AbsErrorQ95_MeV": 3.2919162531014194,
+      "MaxAbsError_MeV": 122.39400212752025,
+      "Outside20MeV": 13,
+      "Outside100MeV": 1
+    }
+  },
+  "epochs": 2000,
+  "cpu_threads": 1,
+  "constant_features": [
+    "ClusterSSDZX2"
+  ],
+  "elapsed_seconds": 213.28495387500152
+}
