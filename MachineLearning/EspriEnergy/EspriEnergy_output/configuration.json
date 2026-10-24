@@ -1,0 +1,41 @@
+{
+  "feature_names": [
+    "ENaI",
+    "RDCX",
+    "RDCY"
+  ],
+  "feature_units": [
+    "MeV",
+    "mm",
+    "mm"
+  ],
+  "target_name": "ETrue",
+  "target_definition": "Proton kinetic energy at emission vertex (MeV)",
+  "layer_sizes": [
+    3,
+    128,
+    128,
+    128,
+    1
+  ],
+  "activation": "Tanh",
+  "dtype": "float64",
+  "device": "cpu",
+  "epochs": 2000,
+  "batch_size": 256,
+  "learning_rate": 0.0001,
+  "minimum_learning_rate": 1e-06,
+  "cosine_epochs": 2000,
+  "scheduler": "CosineAnnealingLR",
+  "optimizer": "Adam",
+  "loss": "SmoothL1Loss on standardized ETrue",
+  "smooth_l1_beta": 0.01,
+  "train_fraction": 0.8,
+  "arm_seeds": {
+    "Left": 42,
+    "Right": 43
+  },
+  "weight_decay": 0.0,
+  "checkpoint_rule": "final_epoch",
+  "torch_version": "2.5.1"
+}

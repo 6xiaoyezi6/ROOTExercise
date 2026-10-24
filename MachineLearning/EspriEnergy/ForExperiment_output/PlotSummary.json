@@ -1,0 +1,73 @@
+{
+  "counts": {
+    "Left": {
+      "common_events": 19957,
+      "Original": {
+        "visible_events": 19957,
+        "outside_display": 0
+      },
+      "NN": {
+        "visible_events": 19957,
+        "outside_display": 0
+      }
+    },
+    "Right": {
+      "common_events": 19903,
+      "Original": {
+        "visible_events": 19903,
+        "outside_display": 0
+      },
+      "NN": {
+        "visible_events": 19903,
+        "outside_display": 0
+      }
+    },
+    "Combined": {
+      "common_events": 39860,
+      "Original": {
+        "visible_events": 39860,
+        "outside_display": 0
+      },
+      "NN": {
+        "visible_events": 39860,
+        "outside_display": 0
+      }
+    }
+  },
+  "theta_range_deg": [
+    50.0,
+    80.0
+  ],
+  "energy_range_MeV": [
+    0.0,
+    180.0
+  ],
+  "theta_bin_deg": 0.1,
+  "energy_bin_MeV": 0.1,
+  "shared_color_scale": {
+    "vmin": 1.0,
+    "vmax": 16.0,
+    "scale": "log",
+    "normalization": "raw counts"
+  },
+  "kinematics": {
+    "reaction": "10Be(p,p)10Be",
+    "reference_macro": "/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/PictureForThesis/Draw_8.C",
+    "beam_energy_per_u_MeV": 150,
+    "excitation_MeV": [
+      0.0,
+      3.368,
+      6.179,
+      10.15
+    ],
+    "mass_10Be_u": 10.011340376879525,
+    "mass_proton_u": 1.0072764519777866,
+    "mass_table": "/Users/yemingxin/anaroot/output/Analysis/MyToolsFunction/NuclearMass/nubtab20.asc",
+    "angle_unit": "deg",
+    "proton_energy_unit": "MeV",
+    "line_alpha": 0.4000000059604645,
+    "line_width": 1,
+    "line_style": "solid",
+    "points": 71576
+  }
+}

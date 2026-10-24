@@ -1,0 +1,42 @@
+{
+  "Left": {
+    "input_path": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/InputRootFiles/Processed_Left_Eval.root",
+    "checkpoint_path": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/EspriEnergy_output/EspriEnergy_Left.pt",
+    "input_sha256": "7bef1c30200ab0db19f7c8141cdcd0419453ac32e27db0baff82368631532342",
+    "entries": 12038,
+    "predicted_entries": 12038,
+    "metrics": {
+      "n": 12038,
+      "mse_MeV2": 3.033273789730855,
+      "rmse_MeV": 1.7416296362116874,
+      "mae_MeV": 0.5935513222174382,
+      "r2": 0.9977455178773983,
+      "bias_MeV": -0.09528624882554677,
+      "residual_std_MeV": 1.7390933160838715,
+      "residual_q16_MeV": -0.5506943635752566,
+      "residual_median_MeV": 0.02061587994687386,
+      "residual_q84_MeV": 0.5559001574924752,
+      "central68_half_width_MeV": 0.553297260533866
+    }
+  },
+  "Right": {
+    "input_path": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/InputRootFiles/Processed_Right_Eval.root",
+    "checkpoint_path": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/EspriEnergy_output/EspriEnergy_Right.pt",
+    "input_sha256": "43f0cd0a90a7cd30439feae2896f6de097adf0172d92c651603dc4435c52f41c",
+    "entries": 11792,
+    "predicted_entries": 11792,
+    "metrics": {
+      "n": 11792,
+      "mse_MeV2": 3.5069725887949086,
+      "rmse_MeV": 1.8726912689482238,
+      "mae_MeV": 0.5996572418921464,
+      "r2": 0.9973732774431515,
+      "bias_MeV": -0.13498794936884104,
+      "residual_std_MeV": 1.8678990135562092,
+      "residual_q16_MeV": -0.5812931584588813,
+      "residual_median_MeV": -0.01707527543930354,
+      "residual_q84_MeV": 0.5311192335649987,
+      "central68_half_width_MeV": 0.55620619601194
+    }
+  }
+}

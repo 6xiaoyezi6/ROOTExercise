@@ -1,0 +1,221 @@
+{
+  "input_file": "/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/BackAllTracking/Ex5sigma.root",
+  "tree_name": "tree",
+  "input_entries": 496964,
+  "input_size_bytes": 1511829809,
+  "input_mtime_ns": 1789785007371192590,
+  "feature_mapping": {
+    "ENaI": "naiEnergy",
+    "RDCX": "rdcX[espriSide]",
+    "RDCY": "rdcY[espriSide]"
+  },
+  "cuts": {
+    "protonTheta_deg": [
+      55.0,
+      70.0
+    ],
+    "theta_endpoints_included": true,
+    "BacktrackingOK_BDCRDC": 1,
+    "BacktrackingZ_mean_mm": -4.205798,
+    "BacktrackingZ_sigma_mm": 15.635715,
+    "BacktrackingZ_nsigma": 5.0,
+    "phi12_center_deg": 180.0,
+    "phi12_half_width_deg": 15.0,
+    "phi12_strict_inequality": true
+  },
+  "cutflow": [
+    {
+      "stage": "input",
+      "all": 496964,
+      "Left": 257499,
+      "Right": 239465
+    },
+    {
+      "stage": "valid arm",
+      "all": 496964,
+      "Left": 257499,
+      "Right": 239465
+    },
+    {
+      "stage": "valid NN inputs",
+      "all": 496964,
+      "Left": 257499,
+      "Right": 239465
+    },
+    {
+      "stage": "55 <= theta <= 70",
+      "all": 412283,
+      "Left": 215239,
+      "Right": 197044
+    },
+    {
+      "stage": "BacktrackingOK == 1",
+      "all": 412283,
+      "Left": 215239,
+      "Right": 197044
+    },
+    {
+      "stage": "Backtracking Z 5sigma",
+      "all": 136693,
+      "Left": 72215,
+      "Right": 64478
+    },
+    {
+      "stage": "Phi12",
+      "all": 39860,
+      "Left": 19957,
+      "Right": 19903
+    }
+  ],
+  "models": {
+    "Left": {
+      "checkpoint": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/EspriEnergy_output/EspriEnergy_Left.pt",
+      "sha256": "1d9b2ce5183ea59d35e26ec59c258a3f35a95c5ae28dd02dad777b001215e2b9",
+      "experiment_side": 1,
+      "simulation_arm": 0,
+      "epoch": 2000,
+      "configuration": {
+        "feature_names": [
+          "ENaI",
+          "RDCX",
+          "RDCY"
+        ],
+        "feature_units": [
+          "MeV",
+          "mm",
+          "mm"
+        ],
+        "target_name": "ETrue",
+        "target_definition": "Proton kinetic energy at emission vertex (MeV)",
+        "layer_sizes": [
+          3,
+          128,
+          128,
+          128,
+          1
+        ],
+        "activation": "Tanh",
+        "dtype": "float64",
+        "device": "cpu",
+        "epochs": 2000,
+        "batch_size": 256,
+        "learning_rate": 0.0001,
+        "minimum_learning_rate": 1e-06,
+        "cosine_epochs": 2000,
+        "scheduler": "CosineAnnealingLR",
+        "optimizer": "Adam",
+        "loss": "SmoothL1Loss on standardized ETrue",
+        "smooth_l1_beta": 0.01,
+        "train_fraction": 0.8,
+        "arm_seeds": {
+          "Left": 42,
+          "Right": 43
+        },
+        "weight_decay": 0.0,
+        "checkpoint_rule": "final_epoch",
+        "torch_version": "2.5.1"
+      },
+      "x_mean": [
+        69.69592341728062,
+        271.00004441277855,
+        226.18884421370458
+      ],
+      "x_std": [
+        32.0441040217687,
+        73.35225012505217,
+        115.3625150223839
+      ],
+      "y_mean": [
+        94.22303150061494
+      ],
+      "y_std": [
+        36.67308054133703
+      ],
+      "selected_events": 19957,
+      "finite_predictions": 19957,
+      "nonpositive_predictions": 0,
+      "same_event_comparison": 19957,
+      "outside_training_range": 4,
+      "outside_by_feature": {
+        "ENaI": 0,
+        "RDCX": 3,
+        "RDCY": 1
+      }
+    },
+    "Right": {
+      "checkpoint": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/EspriEnergy_output/EspriEnergy_Right.pt",
+      "sha256": "7436e3e54313aa95417dbe14e176130b86515eeae6221a87e525821ee107b3bf",
+      "experiment_side": 0,
+      "simulation_arm": 1,
+      "epoch": 2000,
+      "configuration": {
+        "feature_names": [
+          "ENaI",
+          "RDCX",
+          "RDCY"
+        ],
+        "feature_units": [
+          "MeV",
+          "mm",
+          "mm"
+        ],
+        "target_name": "ETrue",
+        "target_definition": "Proton kinetic energy at emission vertex (MeV)",
+        "layer_sizes": [
+          3,
+          128,
+          128,
+          128,
+          1
+        ],
+        "activation": "Tanh",
+        "dtype": "float64",
+        "device": "cpu",
+        "epochs": 2000,
+        "batch_size": 256,
+        "learning_rate": 0.0001,
+        "minimum_learning_rate": 1e-06,
+        "cosine_epochs": 2000,
+        "scheduler": "CosineAnnealingLR",
+        "optimizer": "Adam",
+        "loss": "SmoothL1Loss on standardized ETrue",
+        "smooth_l1_beta": 0.01,
+        "train_fraction": 0.8,
+        "arm_seeds": {
+          "Left": 42,
+          "Right": 43
+        },
+        "weight_decay": 0.0,
+        "checkpoint_rule": "final_epoch",
+        "torch_version": "2.5.1"
+      },
+      "x_mean": [
+        69.81815494848298,
+        176.06193233356572,
+        224.21028973778485
+      ],
+      "x_std": [
+        31.96729710089762,
+        72.27611518590457,
+        116.39942401517331
+      ],
+      "y_mean": [
+        93.99005319543517
+      ],
+      "y_std": [
+        36.51625419388792
+      ],
+      "selected_events": 19903,
+      "finite_predictions": 19903,
+      "nonpositive_predictions": 0,
+      "same_event_comparison": 19903,
+      "outside_training_range": 8,
+      "outside_by_feature": {
+        "ENaI": 0,
+        "RDCX": 2,
+        "RDCY": 6
+      }
+    }
+  },
+  "comparison_definition": "Same selected events with finite NN prediction and finite positive original protonEnergy; original reconstruction is not truth."
+}

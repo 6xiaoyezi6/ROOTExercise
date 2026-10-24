@@ -1,0 +1,34 @@
+{
+  "reaction": "10Be(p,p)10Be",
+  "beam_energy_total_MeV": 1500.0,
+  "theta_selection_deg": [
+    55.0,
+    70.0
+  ],
+  "range_MeV": [
+    -20.0,
+    30.0
+  ],
+  "display_range_MeV": [
+    -20.0,
+    28.0
+  ],
+  "bin_width_MeV": 0.1,
+  "input_pairs": 39860,
+  "valid_pairs": 39860,
+  "invalid_original": 0,
+  "invalid_NN": 0,
+  "normalization": "raw counts, same events with both missing-mass reconstructions valid",
+  "counts": {
+    "Original": {
+      "visible_events": 39801,
+      "underflow": 59,
+      "overflow": 0
+    },
+    "NN": {
+      "visible_events": 39801,
+      "underflow": 59,
+      "overflow": 0
+    }
+  }
+}

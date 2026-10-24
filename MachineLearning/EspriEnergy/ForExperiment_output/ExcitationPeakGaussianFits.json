@@ -1,0 +1,165 @@
+{
+  "input": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/ForExperiment_output/ExcitationEnergyComparison.npz",
+  "input_sha256": "5ec7d0ee949bac41f71f6e87e39e4b4f1025aa936d9f7c3e2d3d6648a0b043e1",
+  "common_events": 39860,
+  "fit_windows_MeV": {
+    "gs": [
+      -1.0,
+      1.0
+    ],
+    "first": [
+      2.3,
+      4.3
+    ]
+  },
+  "fit_method": "iminuit MIGRAD; independent window-normalized unbinned extended Gaussian likelihood; no background",
+  "error_method": "iminuit HESSE; statistical errors only",
+  "display_range_MeV": [
+    -20.0,
+    28.0
+  ],
+  "display_bin_width_MeV": 0.5,
+  "comparison": "Original and simulation-trained MLP reconstructions of the same experimental events",
+  "fits": {
+    "Original": {
+      "gs": {
+        "range_MeV": [
+          -1.0,
+          1.0
+        ],
+        "fit_events": 2205,
+        "mu_MeV": -0.03377230047642987,
+        "mu_err_MeV": 0.019793123711495553,
+        "sigma_MeV": 0.678775590410554,
+        "sigma_err_MeV": 0.02549617132055826,
+        "yield": 2205.002121998179,
+        "yield_err": 46.95392508399209,
+        "covariance_order": [
+          "mu",
+          "sigma"
+        ],
+        "covariance": [
+          [
+            0.0003918189760498671,
+            -4.500415926061025e-05
+          ],
+          [
+            -4.500415926061025e-05,
+            0.0006502390364984776
+          ]
+        ],
+        "converged": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 3.3343336545841104e-05,
+        "poisson_deviance": 6.1549206411053845,
+        "ndf": 1,
+        "deviance_per_ndf": 6.1549206411053845
+      },
+      "first": {
+        "range_MeV": [
+          2.3,
+          4.3
+        ],
+        "fit_events": 10794,
+        "mu_MeV": 3.3128687009243922,
+        "mu_err_MeV": 0.008714169461798704,
+        "sigma_MeV": 0.6697664423096524,
+        "sigma_err_MeV": 0.011120590456287438,
+        "yield": 10794.012899094296,
+        "yield_err": 103.89266799634697,
+        "covariance_order": [
+          "mu",
+          "sigma"
+        ],
+        "covariance": [
+          [
+            7.593867193515082e-05,
+            3.405052150722037e-06
+          ],
+          [
+            3.405052150722037e-06,
+            0.0001236742588135607
+          ]
+        ],
+        "converged": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 2.5940740731835513e-06,
+        "poisson_deviance": 0.1979877991358827,
+        "ndf": 1,
+        "deviance_per_ndf": 0.1979877991358827
+      }
+    },
+    "MLP": {
+      "gs": {
+        "range_MeV": [
+          -1.0,
+          1.0
+        ],
+        "fit_events": 2168,
+        "mu_MeV": -0.06633892706706135,
+        "mu_err_MeV": 0.0234535217634515,
+        "sigma_MeV": 0.7393403169516024,
+        "sigma_err_MeV": 0.03246120224688975,
+        "yield": 2168.002244220995,
+        "yield_err": 46.55824756579841,
+        "covariance_order": [
+          "mu",
+          "sigma"
+        ],
+        "covariance": [
+          [
+            0.0005501690169460901,
+            -0.00014003859748709383
+          ],
+          [
+            -0.00014003859748709383,
+            0.0010541891773875166
+          ]
+        ],
+        "converged": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 3.094127097087855e-05,
+        "poisson_deviance": 6.616884854431797,
+        "ndf": 1,
+        "deviance_per_ndf": 6.616884854431797
+      },
+      "first": {
+        "range_MeV": [
+          2.3,
+          4.3
+        ],
+        "fit_events": 10566,
+        "mu_MeV": 3.2846174642564945,
+        "mu_err_MeV": 0.009251551169916494,
+        "sigma_MeV": 0.6893129966908476,
+        "sigma_err_MeV": 0.012141433187230821,
+        "yield": 10566.01212095197,
+        "yield_err": 102.78956594374995,
+        "covariance_order": [
+          "mu",
+          "sigma"
+        ],
+        "covariance": [
+          [
+            8.559364169018786e-05,
+            -4.531920623469887e-06
+          ],
+          [
+            -4.531920623469887e-06,
+            0.00014742377886641132
+          ]
+        ],
+        "converged": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 9.502455886267803e-06,
+        "poisson_deviance": 0.490798339280321,
+        "ndf": 1,
+        "deviance_per_ndf": 0.490798339280321
+      }
+    }
+  }
+}

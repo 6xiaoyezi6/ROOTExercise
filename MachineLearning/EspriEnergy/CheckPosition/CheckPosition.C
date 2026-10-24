@@ -1,9 +1,9 @@
 /*
- * 功能：读取当前目录 Espri.root 和 Ex5sigma.root，按左右臂绘制两行五列能角图，
+ * 功能：读取 EspriEnergy/InputRootFiles 目录的 Espri.root 和 Ex5sigma.root，按左右臂绘制两行五列能角图，
  *       五列为实验、实验加 BDC-RDC Z 的 5sigma 门、实验同时加 Z 门和 phi12 门、
  *       模拟停止筛选前及筛选后；
  *       另输出原三列 RDCX.pdf、RDCY.pdf，以及两列 RDCX_55_70.pdf、RDCY_55_70.pdf。
- * 方法：实验使用 protonTheta/protonEnergy 及有效所选侧 RDC；模拟沿用 Process.C
+ * 方法：实验使用 protonTheta/protonEnergy 及有效所选侧 RDC；模拟沿用 PreProcess.C
  *       的唯一初始质子、同臂塑闪/NaI 正能量、符合臂合计唯一 RDC 命中条件。
  *       将实验约定 RDCX/Y 还原为世界中面位置，减去 InitialConditions 的真实三维
  *       发射顶点，以连线相对世界 +Z 的极角填图，不使用生成动量方向或 RDC 拟合斜率。
@@ -27,8 +27,10 @@
  *       只用 RDCX/Y 时中面法向坐标置零，与保存世界位置可差半个 0.01 mm 中面厚度。
  *       r>1100 mm 识别当前几何的 NaI 交互记录，停止判据不是严格停止真值。
  *       模拟纵轴为初始真实动能，实验为已重建靶点动能；不重新拟合、模拟或标定。
- *       运行会覆盖同名 PDF；不创建输出目录，不保存 ROOT、PNG、CSV 或文本文件。
- * 运行：root -l -b -q CheckPosition.C
+ *       输入和输出均使用下方具名绝对路径，不依赖启动时的工作目录。
+ *       五份 PDF 保存于 EspriEnergy/CheckPosition，运行会覆盖该目录内的同名 PDF；
+ *       不创建输出目录，不保存 ROOT、PNG、CSV 或文本文件。
+ * 运行：在 EspriEnergy 目录执行 root -l -b -q CheckPosition/CheckPosition.C
  */
 
 #include <algorithm>
@@ -51,11 +53,15 @@
 #include "TInteractionCoordinates.h"
 
 namespace CheckPositionInternal {
-const char* const kSimulationFile = "Espri.root";
-const char* const kExperimentFile = "Ex5sigma.root";
-const char* const kOutputPdf = "CheckPosition.pdf";
-const char* const kRdcOutputPdf[2] = {"RDCX.pdf", "RDCY.pdf"};
-const char* const kRdcAngleOutputPdf[2] = {"RDCX_55_70.pdf", "RDCY_55_70.pdf"};
+const char* const kSimulationFile = "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/InputRootFiles/Espri.root";
+const char* const kExperimentFile = "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/InputRootFiles/Ex5sigma.root";
+const char* const kOutputPdf = "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/CheckPosition/CheckPosition.pdf";
+const char* const kRdcOutputPdf[2] = {
+    "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/CheckPosition/RDCX.pdf",
+    "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/CheckPosition/RDCY.pdf"};
+const char* const kRdcAngleOutputPdf[2] = {
+    "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/CheckPosition/RDCX_55_70.pdf",
+    "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/CheckPosition/RDCY_55_70.pdf"};
 const char* const kRdcNames[2] = {"RDCX", "RDCY"};
 const Double_t kRdcMinMM = 0.0, kRdcMaxMM = 460.0, kRdcBinWidthMM = 2.0;
 const Double_t kRdcAngleMinDeg = 55.0, kRdcAngleMaxDeg = 70.0;

@@ -1,0 +1,1060 @@
+{
+  "input": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/ForExperiment_output/ExcitationEnergyComparison.npz",
+  "input_sha256": "865796be55eaded88031642601424696730338b5ceccbd039e527420abff0934",
+  "common_events": 39860,
+  "fit_model": "Independent local Gaussian, unbinned extended likelihood, no background",
+  "windows_MeV": {
+    "gs": [
+      -1.0,
+      1.0
+    ],
+    "first": [
+      2.3,
+      4.3
+    ]
+  },
+  "window_note": "Use same peak-centered windows for current Original and MLP, since their peaks now align; old MLP-specific windows are not reused",
+  "fits": {
+    "Combined": {
+      "Original": {
+        "gs": {
+          "method": "Original",
+          "state": "gs",
+          "range_MeV": [
+            -1.0,
+            1.0
+          ],
+          "fit_events": 2205,
+          "parameters": {
+            "n": 2205.002121998179,
+            "mu": -0.03377230047642987,
+            "sigma": 0.678775590410554
+          },
+          "errors": {
+            "n": 46.95392508399209,
+            "mu": 0.019793123711495553,
+            "sigma": 0.02549617132055826
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              2205.0043952996753,
+              3.0243226235069487e-09,
+              -4.369668628585864e-08
+            ],
+            [
+              3.0243226235069487e-09,
+              0.0003918189760498671,
+              -4.500415926061025e-05
+            ],
+            [
+              -4.369668628585864e-08,
+              -4.500415926061025e-05,
+              0.0006502390364984776
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 3.3343336545841104e-05,
+            "poisson_deviance": 28.65674488917622,
+            "ndf": 17,
+            "deviance_per_ndf": 1.6856908758338953,
+            "approximate_gof_pvalue": 0.037825409989442726
+          }
+        },
+        "first": {
+          "method": "Original",
+          "state": "first",
+          "range_MeV": [
+            2.3,
+            4.3
+          ],
+          "fit_events": 10794,
+          "parameters": {
+            "n": 10794.012899094296,
+            "mu": 3.3128687009243922,
+            "sigma": 0.6697664423096524
+          },
+          "errors": {
+            "n": 103.89266799634697,
+            "mu": 0.008714169461798704,
+            "sigma": 0.011120590456287438
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              10794.01979383767,
+              4.210108882116991e-08,
+              1.887791811274839e-09
+            ],
+            [
+              4.210108882116991e-08,
+              7.593867193515082e-05,
+              3.405052150722037e-06
+            ],
+            [
+              1.887791811274839e-09,
+              3.405052150722037e-06,
+              0.0001236742588135607
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 2.5940740731835513e-06,
+            "poisson_deviance": 19.07763982015497,
+            "ndf": 17,
+            "deviance_per_ndf": 1.1222141070679394,
+            "approximate_gof_pvalue": 0.3240939585601647
+          }
+        }
+      },
+      "MLP": {
+        "gs": {
+          "method": "MLP",
+          "state": "gs",
+          "range_MeV": [
+            -1.0,
+            1.0
+          ],
+          "fit_events": 2183,
+          "parameters": {
+            "n": 2183.002262373363,
+            "mu": -0.049926307594016395,
+            "sigma": 0.7378368427959586
+          },
+          "errors": {
+            "n": 46.71906158030242,
+            "mu": 0.023108131815644084,
+            "sigma": 0.0321549918124609
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              2183.004029149093,
+              1.2012502796309727e-08,
+              2.6872697814483384e-07
+            ],
+            [
+              1.2012502796309727e-08,
+              0.0005340810676612899,
+              -0.00010327536161265123
+            ],
+            [
+              2.6872697814483384e-07,
+              -0.00010327536161265123,
+              0.0010343864384377921
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 1.5339730291660183e-05,
+            "poisson_deviance": 31.41787475859639,
+            "ndf": 17,
+            "deviance_per_ndf": 1.8481102799174347,
+            "approximate_gof_pvalue": 0.017756921773594617
+          }
+        },
+        "first": {
+          "method": "MLP",
+          "state": "first",
+          "range_MeV": [
+            2.3,
+            4.3
+          ],
+          "fit_events": 10535,
+          "parameters": {
+            "n": 10535.012064352239,
+            "mu": 3.290000310438421,
+            "sigma": 0.6889901587423047
+          },
+          "errors": {
+            "n": 102.63864158609886,
+            "mu": 0.00925297443695805,
+            "sigma": 0.012144221730330529
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              10535.024077278005,
+              5.878837073887179e-09,
+              -2.9851815093995957e-07
+            ],
+            [
+              5.878837073887179e-09,
+              8.561997974110923e-05,
+              -2.9046092024773537e-06
+            ],
+            [
+              -2.9851815093995957e-07,
+              -2.9046092024773537e-06,
+              0.00014749151191451612
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 2.0326631304516108e-06,
+            "poisson_deviance": 17.551673049909787,
+            "ndf": 17,
+            "deviance_per_ndf": 1.0324513558770463,
+            "approximate_gof_pvalue": 0.41763694332340645
+          }
+        }
+      }
+    },
+    "Left": {
+      "Original": {
+        "gs": {
+          "method": "Original",
+          "state": "gs",
+          "range_MeV": [
+            -1.0,
+            1.0
+          ],
+          "fit_events": 1093,
+          "parameters": {
+            "n": 1093.0007910292716,
+            "mu": -0.0011917866419285383,
+            "sigma": 0.7221537974296954
+          },
+          "errors": {
+            "n": 33.05552988249747,
+            "mu": 0.031135026726080317,
+            "sigma": 0.04281720586164878
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              1093.0013493087235,
+              -4.826453093600025e-10,
+              2.95319200129148e-07
+            ],
+            [
+              -4.826453093600025e-10,
+              0.000969703290646228,
+              -2.9985214737282836e-06
+            ],
+            [
+              2.95319200129148e-07,
+              -2.9985214737282836e-06,
+              0.0018347240634447055
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 8.194011240191559e-07,
+            "poisson_deviance": 17.496857052418484,
+            "ndf": 17,
+            "deviance_per_ndf": 1.0292268854363815,
+            "approximate_gof_pvalue": 0.4212254191879771
+          }
+        },
+        "first": {
+          "method": "Original",
+          "state": "first",
+          "range_MeV": [
+            2.3,
+            4.3
+          ],
+          "fit_events": 5248,
+          "parameters": {
+            "n": 5248.006524719913,
+            "mu": 3.312880635284891,
+            "sigma": 0.7041968304330004
+          },
+          "errors": {
+            "n": 72.44086549557869,
+            "mu": 0.013614937711916575,
+            "sigma": 0.01825270340217977
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              5248.012320178122,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.00018537798551613392,
+              9.069036310563947e-06
+            ],
+            [
+              0.0,
+              9.069036310563947e-06,
+              0.0003332084496408756
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 7.637826410288942e-06,
+            "poisson_deviance": 18.07286202306682,
+            "ndf": 17,
+            "deviance_per_ndf": 1.0631095307686365,
+            "approximate_gof_pvalue": 0.38425820462006893
+          }
+        }
+      },
+      "MLP": {
+        "gs": {
+          "method": "MLP",
+          "state": "gs",
+          "range_MeV": [
+            -1.0,
+            1.0
+          ],
+          "fit_events": 1057,
+          "parameters": {
+            "n": 1057.0004570240872,
+            "mu": 0.007073055231388459,
+            "sigma": 0.7689899951508626
+          },
+          "errors": {
+            "n": 32.50642817895812,
+            "mu": 0.03535182420527028,
+            "sigma": 0.05174098879950467
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              1057.0011649768444,
+              -4.94096347984855e-08,
+              -1.5698954364747892e-09
+            ],
+            [
+              -4.94096347984855e-08,
+              0.001250272474266012,
+              3.9724986021560693e-05
+            ],
+            [
+              -1.5698954364747892e-09,
+              3.9724986021560693e-05,
+              0.0026800358865370177
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 5.77153683908018e-06,
+            "poisson_deviance": 27.48522246037097,
+            "ndf": 17,
+            "deviance_per_ndf": 1.6167777917865276,
+            "approximate_gof_pvalue": 0.051324525582782235
+          }
+        },
+        "first": {
+          "method": "MLP",
+          "state": "first",
+          "range_MeV": [
+            2.3,
+            4.3
+          ],
+          "fit_events": 5014,
+          "parameters": {
+            "n": 5014.005122701692,
+            "mu": 3.3284154068593823,
+            "sigma": 0.746294527023502
+          },
+          "errors": {
+            "n": 70.80732940548114,
+            "mu": 0.015451473638144808,
+            "sigma": 0.021890517595691716
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              5014.011223497985,
+              -8.604408169696918e-08,
+              -4.394462581003411e-07
+            ],
+            [
+              -8.604408169696918e-08,
+              0.00023876705557622925,
+              2.7812887691353777e-05
+            ],
+            [
+              -4.394462581003411e-07,
+              2.7812887691353777e-05,
+              0.00047928925670654235
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 1.0438240084112727e-05,
+            "poisson_deviance": 16.960793304835136,
+            "ndf": 17,
+            "deviance_per_ndf": 0.9976937238138315,
+            "approximate_gof_pvalue": 0.4570254485875582
+          }
+        }
+      }
+    },
+    "Right": {
+      "Original": {
+        "gs": {
+          "method": "Original",
+          "state": "gs",
+          "range_MeV": [
+            -1.0,
+            1.0
+          ],
+          "fit_events": 1112,
+          "parameters": {
+            "n": 1112.0009506160873,
+            "mu": -0.06070843090264921,
+            "sigma": 0.640522336941875
+          },
+          "errors": {
+            "n": 33.341700755025045,
+            "mu": 0.02549445539597245,
+            "sigma": 0.03080774184707602
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              1112.0023039865446,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0006501086451898118,
+              -0.00011962245833671812
+            ],
+            [
+              0.0,
+              -0.00011962245833671812,
+              0.0009495258715504766
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 4.4079341820042474e-08,
+            "poisson_deviance": 26.64227696580092,
+            "ndf": 17,
+            "deviance_per_ndf": 1.5671927626941717,
+            "approximate_gof_pvalue": 0.06352701020871672
+          }
+        },
+        "first": {
+          "method": "Original",
+          "state": "first",
+          "range_MeV": [
+            2.3,
+            4.3
+          ],
+          "fit_events": 5546,
+          "parameters": {
+            "n": 5546.005806817616,
+            "mu": 3.3128654641059567,
+            "sigma": 0.6406109733376875
+          },
+          "errors": {
+            "n": 74.46930707622232,
+            "mu": 0.011280767528536906,
+            "sigma": 0.013785200812727605
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              5546.011023057354,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.00012726111529879106,
+              5.2376039449616835e-06
+            ],
+            [
+              0.0,
+              5.2376039449616835e-06,
+              0.00019004814327727265
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 7.487895454515721e-07,
+            "poisson_deviance": 17.38058080122925,
+            "ndf": 17,
+            "deviance_per_ndf": 1.0223871059546619,
+            "approximate_gof_pvalue": 0.42888362049060386
+          }
+        }
+      },
+      "MLP": {
+        "gs": {
+          "method": "MLP",
+          "state": "gs",
+          "range_MeV": [
+            -1.0,
+            1.0
+          ],
+          "fit_events": 1126,
+          "parameters": {
+            "n": 1126.000961974079,
+            "mu": -0.09723516482221972,
+            "sigma": 0.7073561042730969
+          },
+          "errors": {
+            "n": 33.5509906998808,
+            "mu": 0.030703931875849577,
+            "sigma": 0.03996462546296509
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              1126.0022721532682,
+              4.23645450062528e-08,
+              -1.4253795075340837e-08
+            ],
+            [
+              4.23645450062528e-08,
+              0.0009430306597143907,
+              -0.00031728809482902423
+            ],
+            [
+              -1.4253795075340837e-08,
+              -0.00031728809482902423,
+              0.0015982555423186852
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 9.626756964676677e-07,
+            "poisson_deviance": 20.001168342776324,
+            "ndf": 17,
+            "deviance_per_ndf": 1.1765393142809604,
+            "approximate_gof_pvalue": 0.2741695127378395
+          }
+        },
+        "first": {
+          "method": "MLP",
+          "state": "first",
+          "range_MeV": [
+            2.3,
+            4.3
+          ],
+          "fit_events": 5521,
+          "parameters": {
+            "n": 5521.006101859237,
+            "mu": 3.2615482421445203,
+            "sigma": 0.643926412737404
+          },
+          "errors": {
+            "n": 74.30127322601038,
+            "mu": 0.011456065820056427,
+            "sigma": 0.014010790054157451
+          },
+          "covariance_parameter_order": [
+            "n",
+            "mu",
+            "sigma"
+          ],
+          "covariance": [
+            [
+              5521.012529802529,
+              -2.0435540375225425e-08,
+              2.5754957138307367e-07
+            ],
+            [
+              -2.0435540375225425e-08,
+              0.00013124719441695354,
+              -1.5577188533699063e-05
+            ],
+            [
+              2.5754957138307367e-07,
+              -1.5577188533699063e-05,
+              0.00019631965470662366
+            ]
+          ],
+          "quality": {
+            "valid_minimum": true,
+            "accurate_covariance": true,
+            "parameters_at_limit": false,
+            "edm": 3.285620089840529e-05,
+            "poisson_deviance": 11.18126138624294,
+            "ndf": 17,
+            "deviance_per_ndf": 0.6577212580142906,
+            "approximate_gof_pvalue": 0.8469874076573262
+          }
+        }
+      }
+    }
+  },
+  "range_sensitivity": [
+    {
+      "method": "Original",
+      "state": "gs",
+      "range_MeV": [
+        -0.8,
+        0.8
+      ],
+      "fit_events": 1964,
+      "parameters": {
+        "n": 1964.0019141144576,
+        "mu": -0.060994402421957444,
+        "sigma": 0.7106746015201741
+      },
+      "errors": {
+        "n": 44.313321350778665,
+        "mu": 0.027658533688412534,
+        "sigma": 0.0455554039935242
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          1964.0037611185426,
+          5.864250207182784e-08,
+          -4.162900278652185e-07
+        ],
+        [
+          5.864250207182784e-08,
+          0.0007653012649886166,
+          -0.00029260262979252075
+        ],
+        [
+          -4.162900278652185e-07,
+          -0.00029260262979252075,
+          0.002077120733364507
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 4.538566956206003e-06,
+        "poisson_deviance": 19.6874048092543,
+        "ndf": 13,
+        "deviance_per_ndf": 1.514415754558023,
+        "approximate_gof_pvalue": 0.10328354712864113
+      }
+    },
+    {
+      "method": "Original",
+      "state": "first",
+      "range_MeV": [
+        2.5,
+        4.1
+      ],
+      "fit_events": 9567,
+      "parameters": {
+        "n": 9567.011229085325,
+        "mu": 3.301309358816547,
+        "sigma": 0.6538595194481421
+      },
+      "errors": {
+        "n": 97.80944527646898,
+        "mu": 0.010477903148900625,
+        "sigma": 0.016315941210897522
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          9567.020915435853,
+          -5.7058621022218915e-08,
+          -8.436324727558602e-07
+        ],
+        [
+          -5.7058621022218915e-08,
+          0.00010979273262727191,
+          1.120091483379481e-06
+        ],
+        [
+          -8.436324727558602e-07,
+          1.120091483379481e-06,
+          0.0002662416274323934
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 9.794210015129073e-06,
+        "poisson_deviance": 12.661987389742574,
+        "ndf": 13,
+        "deviance_per_ndf": 0.973999029980198,
+        "approximate_gof_pvalue": 0.47424651216242186
+      }
+    },
+    {
+      "method": "MLP",
+      "state": "gs",
+      "range_MeV": [
+        -0.8,
+        0.8
+      ],
+      "fit_events": 1914,
+      "parameters": {
+        "n": 1914.0018575897925,
+        "mu": -0.10079876315147898,
+        "sigma": 0.7387149774598716
+      },
+      "errors": {
+        "n": 43.74551612060179,
+        "mu": 0.03154340440395576,
+        "sigma": 0.05151050976215732
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          1914.0034919874847,
+          1.1752918466074795e-07,
+          -5.161837496486466e-07
+        ],
+        [
+          1.1752918466074795e-07,
+          0.000995510745058152,
+          -0.0006047981661917876
+        ],
+        [
+          -5.161837496486466e-07,
+          -0.0006047981661917876,
+          0.0026562507525823534
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 1.780133156190107e-05,
+        "poisson_deviance": 22.92017483614448,
+        "ndf": 13,
+        "deviance_per_ndf": 1.7630903720111137,
+        "approximate_gof_pvalue": 0.04264426520584667
+      }
+    },
+    {
+      "method": "MLP",
+      "state": "first",
+      "range_MeV": [
+        2.5,
+        4.1
+      ],
+      "fit_events": 9300,
+      "parameters": {
+        "n": 9300.011370013366,
+        "mu": 3.270005478298105,
+        "sigma": 0.6745097503155919
+      },
+      "errors": {
+        "n": 96.43490564146668,
+        "mu": 0.011313029261731167,
+        "sigma": 0.01806122571674501
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          9300.02435637888,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.00012799317528324698,
+          -2.3034551885162848e-05
+        ],
+        [
+          0.0,
+          -2.3034551885162848e-05,
+          0.00032625446441388647
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 5.030826165490475e-07,
+        "poisson_deviance": 6.610342643668192,
+        "ndf": 13,
+        "deviance_per_ndf": 0.508487895666784,
+        "approximate_gof_pvalue": 0.921100891477425
+      }
+    },
+    {
+      "method": "Original",
+      "state": "gs",
+      "range_MeV": [
+        -1.2,
+        1.2
+      ],
+      "fit_events": 2416,
+      "parameters": {
+        "n": 2416.0018825947336,
+        "mu": -0.008155314132940595,
+        "sigma": 0.7302321250464183
+      },
+      "errors": {
+        "n": 49.1494594079802,
+        "mu": 0.018834805460553203,
+        "sigma": 0.021910518031794002
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          2416.002675772982,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0003547790332741805,
+          -6.419377079000609e-06
+        ],
+        [
+          0.0,
+          -6.419377079000609e-06,
+          0.00048016682964991504
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 2.3556399706874417e-06,
+        "poisson_deviance": 42.14639743318012,
+        "ndf": 21,
+        "deviance_per_ndf": 2.0069713063419106,
+        "approximate_gof_pvalue": 0.004033012144692363
+      }
+    },
+    {
+      "method": "Original",
+      "state": "first",
+      "range_MeV": [
+        2.1,
+        4.5
+      ],
+      "fit_events": 11668,
+      "parameters": {
+        "n": 11668.012994341228,
+        "mu": 3.318055810057911,
+        "sigma": 0.6885939729904185
+      },
+      "errors": {
+        "n": 108.0170890993677,
+        "mu": 0.007802425666505686,
+        "sigma": 0.008583830835220296
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          11668.02486844594,
+          3.019601685629423e-08,
+          -2.005968019181258e-07
+        ],
+        [
+          3.019601685629423e-08,
+          6.087870439130254e-05,
+          2.318593351262826e-06
+        ],
+        [
+          -2.005968019181258e-07,
+          2.318593351262826e-06,
+          7.368449642771078e-05
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 1.8073920111284494e-05,
+        "poisson_deviance": 25.87319669234489,
+        "ndf": 21,
+        "deviance_per_ndf": 1.2320569853497567,
+        "approximate_gof_pvalue": 0.2113253745601007
+      }
+    },
+    {
+      "method": "MLP",
+      "state": "gs",
+      "range_MeV": [
+        -1.2,
+        1.2
+      ],
+      "fit_events": 2402,
+      "parameters": {
+        "n": 2402.0027947366657,
+        "mu": -0.02106507526021337,
+        "sigma": 0.781026501053765
+      },
+      "errors": {
+        "n": 49.00685483633083,
+        "mu": 0.02113051704674542,
+        "sigma": 0.026207904490658462
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          2402.0051372056782,
+          7.597058604711894e-09,
+          -2.1466216365591156e-07
+        ],
+        [
+          7.597058604711894e-09,
+          0.00044654492093637306,
+          -2.4315006005776524e-05
+        ],
+        [
+          -2.1466216365591156e-07,
+          -2.4315006005776524e-05,
+          0.0006870437718183713
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 1.578304329909381e-05,
+        "poisson_deviance": 49.06226038839236,
+        "ndf": 21,
+        "deviance_per_ndf": 2.3362981137329695,
+        "approximate_gof_pvalue": 0.0004919087172032357
+      }
+    },
+    {
+      "method": "MLP",
+      "state": "first",
+      "range_MeV": [
+        2.1,
+        4.5
+      ],
+      "fit_events": 11445,
+      "parameters": {
+        "n": 11445.011327310713,
+        "mu": 3.300560477137419,
+        "sigma": 0.7123156146910797
+      },
+      "errors": {
+        "n": 106.97985212582535,
+        "mu": 0.008311133362775003,
+        "sigma": 0.009444736655799701
+      },
+      "covariance_parameter_order": [
+        "n",
+        "mu",
+        "sigma"
+      ],
+      "covariance": [
+        [
+          11445.02209160014,
+          3.9515396999134714e-08,
+          8.761406225790221e-11
+        ],
+        [
+          3.9515396999134714e-08,
+          6.907604228081169e-05,
+          1.531563169934252e-07
+        ],
+        [
+          8.761406225790221e-11,
+          1.531563169934252e-07,
+          8.920641468031328e-05
+        ]
+      ],
+      "quality": {
+        "valid_minimum": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 2.6675224975278075e-06,
+        "poisson_deviance": 28.44652346072048,
+        "ndf": 21,
+        "deviance_per_ndf": 1.3545963552724039,
+        "approximate_gof_pvalue": 0.12793584220534468
+      }
+    }
+  ],
+  "scope": "Current post-Mylar results versus original experimental reconstruction. Historical pre-Mylar three-input event cache unavailable; no exact before/after same-model width comparison."
+}
