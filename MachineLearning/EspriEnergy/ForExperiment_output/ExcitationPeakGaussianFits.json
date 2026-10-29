@@ -1,6 +1,6 @@
 {
   "input": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/ForExperiment_output/ExcitationEnergyComparison.npz",
-  "input_sha256": "5ec7d0ee949bac41f71f6e87e39e4b4f1025aa936d9f7c3e2d3d6648a0b043e1",
+  "input_sha256": "1d5886a668fc619a602504c94772ef97060f741eec4c35833b209feb49f0ab83",
   "common_events": 39860,
   "fit_windows_MeV": {
     "gs": [
@@ -19,7 +19,14 @@
     28.0
   ],
   "display_bin_width_MeV": 0.5,
-  "comparison": "Original and simulation-trained MLP reconstructions of the same experimental events",
+  "comparison": "Original and simulation-trained MLP, plus optional GPR, on the same experimental events",
+  "methods": [
+    "Original",
+    "MLP",
+    "GPR"
+  ],
+  "gpr_included": true,
+  "event_mask": "TripletOK",
   "fits": {
     "Original": {
       "gs": {
@@ -97,68 +104,138 @@
           -1.0,
           1.0
         ],
-        "fit_events": 2168,
-        "mu_MeV": -0.06633892706706135,
-        "mu_err_MeV": 0.0234535217634515,
-        "sigma_MeV": 0.7393403169516024,
-        "sigma_err_MeV": 0.03246120224688975,
-        "yield": 2168.002244220995,
-        "yield_err": 46.55824756579841,
+        "fit_events": 2173,
+        "mu_MeV": -0.060819266767206503,
+        "mu_err_MeV": 0.02318130231934945,
+        "sigma_MeV": 0.7361306276710542,
+        "sigma_err_MeV": 0.03203431677121443,
+        "yield": 2173.0022354981375,
+        "yield_err": 46.61191133197826,
         "covariance_order": [
           "mu",
           "sigma"
         ],
         "covariance": [
           [
-            0.0005501690169460901,
-            -0.00014003859748709383
+            0.0005374694188966019,
+            -0.0001251829470608211
           ],
           [
-            -0.00014003859748709383,
-            0.0010541891773875166
+            -0.0001251829470608211,
+            0.0010266343568853826
           ]
         ],
         "converged": true,
         "accurate_covariance": true,
         "parameters_at_limit": false,
-        "edm": 3.094127097087855e-05,
-        "poisson_deviance": 6.616884854431797,
+        "edm": 2.096753023196097e-05,
+        "poisson_deviance": 6.711993003168569,
         "ndf": 1,
-        "deviance_per_ndf": 6.616884854431797
+        "deviance_per_ndf": 6.711993003168569
       },
       "first": {
         "range_MeV": [
           2.3,
           4.3
         ],
-        "fit_events": 10566,
-        "mu_MeV": 3.2846174642564945,
-        "mu_err_MeV": 0.009251551169916494,
-        "sigma_MeV": 0.6893129966908476,
-        "sigma_err_MeV": 0.012141433187230821,
-        "yield": 10566.01212095197,
-        "yield_err": 102.78956594374995,
+        "fit_events": 10559,
+        "mu_MeV": 3.291900302952885,
+        "mu_err_MeV": 0.009365302734463565,
+        "sigma_MeV": 0.6943754277315469,
+        "sigma_err_MeV": 0.012388038861028683,
+        "yield": 10559.01187128038,
+        "yield_err": 102.7555135847415,
         "covariance_order": [
           "mu",
           "sigma"
         ],
         "covariance": [
           [
-            8.559364169018786e-05,
-            -4.531920623469887e-06
+            8.771145987980378e-05,
+            -2.416425499945401e-06
           ],
           [
-            -4.531920623469887e-06,
-            0.00014742377886641132
+            -2.416425499945401e-06,
+            0.0001534736239126886
           ]
         ],
         "converged": true,
         "accurate_covariance": true,
         "parameters_at_limit": false,
-        "edm": 9.502455886267803e-06,
-        "poisson_deviance": 0.490798339280321,
+        "edm": 2.0782185589333503e-06,
+        "poisson_deviance": 0.31994300509041107,
         "ndf": 1,
-        "deviance_per_ndf": 0.490798339280321
+        "deviance_per_ndf": 0.31994300509041107
+      }
+    },
+    "GPR": {
+      "gs": {
+        "range_MeV": [
+          -1.0,
+          1.0
+        ],
+        "fit_events": 2184,
+        "mu_MeV": -0.07656944136967492,
+        "mu_err_MeV": 0.02318720918723427,
+        "sigma_MeV": 0.7335586385429733,
+        "sigma_err_MeV": 0.03166631351712906,
+        "yield": 2184.0020909114014,
+        "yield_err": 46.729755348271965,
+        "covariance_order": [
+          "mu",
+          "sigma"
+        ],
+        "covariance": [
+          [
+            0.0005377436207527853,
+            -0.00015515317099829432
+          ],
+          [
+            -0.00015515317099829432,
+            0.0010031734215801941
+          ]
+        ],
+        "converged": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 1.1677297728673794e-05,
+        "poisson_deviance": 6.652333031376958,
+        "ndf": 1,
+        "deviance_per_ndf": 6.652333031376958
+      },
+      "first": {
+        "range_MeV": [
+          2.3,
+          4.3
+        ],
+        "fit_events": 10508,
+        "mu_MeV": 3.2641304379832343,
+        "mu_err_MeV": 0.009886208225358128,
+        "sigma_MeV": 0.7135274641767533,
+        "sigma_err_MeV": 0.013373221328075224,
+        "yield": 10508.013061072841,
+        "yield_err": 102.50703436434287,
+        "covariance_order": [
+          "mu",
+          "sigma"
+        ],
+        "covariance": [
+          [
+            9.774030152477533e-05,
+            -1.2925098182985953e-05
+          ],
+          [
+            -1.2925098182985953e-05,
+            0.00017885655823817703
+          ]
+        ],
+        "converged": true,
+        "accurate_covariance": true,
+        "parameters_at_limit": false,
+        "edm": 9.49295102886771e-06,
+        "poisson_deviance": 1.785700839015547,
+        "ndf": 1,
+        "deviance_per_ndf": 1.785700839015547
       }
     }
   }

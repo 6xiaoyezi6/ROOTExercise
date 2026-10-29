@@ -13,9 +13,9 @@
   "target_definition": "Proton kinetic energy at emission vertex (MeV)",
   "layer_sizes": [
     3,
-    128,
-    128,
-    128,
+    64,
+    64,
+    64,
     1
   ],
   "activation": "Tanh",

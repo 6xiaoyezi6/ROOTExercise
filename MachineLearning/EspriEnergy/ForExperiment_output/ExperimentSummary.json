@@ -70,7 +70,7 @@
   "models": {
     "Left": {
       "checkpoint": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/EspriEnergy_output/EspriEnergy_Left.pt",
-      "sha256": "1d9b2ce5183ea59d35e26ec59c258a3f35a95c5ae28dd02dad777b001215e2b9",
+      "sha256": "5468301b273d1f17b04ee7fa441cc995b942cd63062cc40293f5336801ad4576",
       "experiment_side": 1,
       "simulation_arm": 0,
       "epoch": 2000,
@@ -89,9 +89,9 @@
         "target_definition": "Proton kinetic energy at emission vertex (MeV)",
         "layer_sizes": [
           3,
-          128,
-          128,
-          128,
+          64,
+          64,
+          64,
           1
         ],
         "activation": "Tanh",
@@ -144,7 +144,7 @@
     },
     "Right": {
       "checkpoint": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/EspriEnergy_output/EspriEnergy_Right.pt",
-      "sha256": "7436e3e54313aa95417dbe14e176130b86515eeae6221a87e525821ee107b3bf",
+      "sha256": "48a2ab49ecd42994caffabfa9df983738ddaff6b15dd152927d203e91ae5a95a",
       "experiment_side": 0,
       "simulation_arm": 1,
       "epoch": 2000,
@@ -163,9 +163,9 @@
         "target_definition": "Proton kinetic energy at emission vertex (MeV)",
         "layer_sizes": [
           3,
-          128,
-          128,
-          128,
+          64,
+          64,
+          64,
           1
         ],
         "activation": "Tanh",

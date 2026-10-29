@@ -16,9 +16,65 @@
   "bin_width_MeV": 0.1,
   "input_pairs": 39860,
   "valid_pairs": 39860,
+  "gpr_included": true,
+  "common_events": 39860,
+  "valid_triplets": 39860,
+  "invalid_GPR": 0,
   "invalid_original": 0,
   "invalid_NN": 0,
-  "normalization": "raw counts, same events with both missing-mass reconstructions valid",
+  "normalization": "raw counts; same experimental events valid for all enabled methods",
+  "gpr_models": {
+    "Left": {
+      "checkpoint": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/GPR/gpr_models.pkl",
+      "sha256": "73bd3f3b233b385fffd9d1d4d3b5e088288b171503b022accca05b5fb3539e26",
+      "sklearn_version": "1.8.0",
+      "input_path": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/InputRootFiles/Processed_Left.root",
+      "fit_events": 7500,
+      "full_train_events": 19204,
+      "kernel": "1.26**2 * RBF(length_scale=[3.07, 0.146, 963]) + WhiteKernel(noise_level=0.00247)",
+      "feature_names": [
+        "ENaI",
+        "RDCX",
+        "RDCY"
+      ],
+      "feature_units": [
+        "MeV",
+        "mm",
+        "mm"
+      ],
+      "target_name": "ETrue",
+      "target_unit": "MeV",
+      "selected_events": 19957,
+      "finite_predictions": 19957,
+      "nonpositive_predictions": 0,
+      "outside_training_range": 4
+    },
+    "Right": {
+      "checkpoint": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/GPR/gpr_models.pkl",
+      "sha256": "73bd3f3b233b385fffd9d1d4d3b5e088288b171503b022accca05b5fb3539e26",
+      "sklearn_version": "1.8.0",
+      "input_path": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/InputRootFiles/Processed_right.root",
+      "fit_events": 7500,
+      "full_train_events": 19319,
+      "kernel": "1.16**2 * RBF(length_scale=[2.77, 0.164, 1e+03]) + WhiteKernel(noise_level=0.00225)",
+      "feature_names": [
+        "ENaI",
+        "RDCX",
+        "RDCY"
+      ],
+      "feature_units": [
+        "MeV",
+        "mm",
+        "mm"
+      ],
+      "target_name": "ETrue",
+      "target_unit": "MeV",
+      "selected_events": 19903,
+      "finite_predictions": 19903,
+      "nonpositive_predictions": 0,
+      "outside_training_range": 8
+    }
+  },
   "counts": {
     "Original": {
       "visible_events": 39801,
@@ -28,6 +84,11 @@
     "NN": {
       "visible_events": 39801,
       "underflow": 59,
+      "overflow": 0
+    },
+    "GPR": {
+      "visible_events": 39799,
+      "underflow": 61,
       "overflow": 0
     }
   }

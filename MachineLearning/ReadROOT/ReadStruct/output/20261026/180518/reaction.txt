@@ -1,0 +1,32 @@
+%%%%%%%%%%%%%%%%%%%%%% S1107 at Triumf %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Beam
+  Particle= 4He
+  ExcitationEnergy= 0 MeV
+  Energy= 800 MeV
+  SigmaEnergy= 0 MeV
+  SigmaThetaX= 0.1 deg
+  SigmaPhiY= 0.1 deg
+  SigmaX= 6 mm
+  SigmaY= 6 mm
+  MeanThetaX= 0 deg
+  MeanPhiY= 0 deg
+  MeanX= 0 mm
+  MeanY= 0 mm
+  %EnergyProfilePath=
+  %XThetaXProfilePath=
+  %YPhiYProfilePath=
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+TwoBodyReaction
+ Beam= 4He
+ Target= 1H
+ Light= 1H
+ Heavy= 4He
+ ExcitationEnergyLight= 0.0 MeV
+ ExcitationEnergyHeavy= 0 MeV
+ LabCrossSectionPath= alphap_lab.txt
+ ShootLight= 1
+ ShootHeavy= 1
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

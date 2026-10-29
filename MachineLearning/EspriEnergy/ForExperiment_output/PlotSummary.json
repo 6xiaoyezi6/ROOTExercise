@@ -46,7 +46,7 @@
   "energy_bin_MeV": 0.1,
   "shared_color_scale": {
     "vmin": 1.0,
-    "vmax": 16.0,
+    "vmax": 17.0,
     "scale": "log",
     "normalization": "raw counts"
   },

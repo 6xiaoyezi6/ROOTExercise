@@ -1,0 +1,57 @@
+{
+  "input": "/Users/yemingxin/ROOT_Exercise/MachineLearning/ReadROOT/ReadStruct/alphap.root",
+  "input_size": 351973905,
+  "input_mtime_ns": 1793008070217386737,
+  "entries": 300000,
+  "source_macro": "/Users/yemingxin/nptool/Projects/myTOGAXSI_ppalpha/Reconstruction/Scattering/UseClusterTrack/ReconstrucionTOGAXSI_HitsLocal.C",
+  "beam_direction": "ReactionConditions truth; input has no VirtualBDC",
+  "geometry": "DetectorConfiguration embedded in input ROOT",
+  "energy_units": "total kinetic energy MeV",
+  "position_units": "mm",
+  "angle_units": "deg",
+  "beam_energy_per_u": 200.0,
+  "target_thickness_mm": 150.0,
+  "target_radius_mm": 15.5,
+  "statistics": {
+    "dvx": {
+      "N": 2583,
+      "mean": 0.0033544391067798908,
+      "std": 0.28788895561331324,
+      "underflow": 0,
+      "overflow": 0,
+      "outside_view": 1
+    },
+    "dvy": {
+      "N": 2583,
+      "mean": -0.0028683409196726636,
+      "std": 0.29576084195729385,
+      "underflow": 0,
+      "overflow": 0,
+      "outside_view": 0
+    },
+    "dvz": {
+      "N": 2583,
+      "mean": -0.015639800633732555,
+      "std": 0.3194075907764368,
+      "underflow": 0,
+      "overflow": 0,
+      "outside_view": 1
+    },
+    "dtheta_p": {
+      "N": 2375,
+      "mean": 0.00958214290137724,
+      "std": 0.34565263722815215,
+      "underflow": 0,
+      "overflow": 0,
+      "outside_view": 1
+    },
+    "etheta_p": {
+      "N": 2369,
+      "outside_view": 0
+    },
+    "etheta_a": {
+      "N": 2577,
+      "outside_view": 0
+    }
+  }
+}
