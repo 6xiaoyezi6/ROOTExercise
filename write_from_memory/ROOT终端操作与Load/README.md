@@ -1,9 +1,12 @@
-# ROOT TTree::Scan() 使用说明
+# ROOT 终端操作
 
-## 1. 基本语法
-Length$ 是返回vector的长度
+## 1. TTree::Scan() 使用说明
 
-## 2. 实际示例
+### 1.1 基本语法
+
+`Length$` 返回 vector 的长度。
+
+### 1.2 实际示例
 
 ```cpp
 tree->Scan("Entry$:FDC0_nhits:Length$(FDC0_TDC):FDC0_nlayerx:FDC0_nlayery", "", "", 10);
@@ -47,15 +50,15 @@ tree->Scan("Entry$:FDC0_nhits:Length$(FDC0_TDC):FDC0_nlayerx:FDC0_nlayery", "", 
 
 需要注意，`FDC0_nlayerx/y` 的具体统计条件取决于数据处理代码。
 
-## 3. 常见用法
+### 1.3 常见用法
 
-**（1）查看前 20 个事件的 hit 数量**
+#### 1.3.1 查看前 20 个事件的 hit 数量
 
 ```cpp
 tree->Scan("Entry$:FDC0_nhits", "", "", 20);
 ```
 
-**（2）查看第 100 个事件的数据**
+#### 1.3.2 查看第 100 个事件的数据
 
 ```cpp
 tree->Scan("Entry$:FDC0_nhits:FDC0_nlayerx:FDC0_nlayery", "", "", 1, 100);
@@ -63,7 +66,7 @@ tree->Scan("Entry$:FDC0_nhits:FDC0_nlayerx:FDC0_nlayery", "", "", 1, 100);
 
 其中 `1` 表示扫描一个事件，`100` 表示从事件 100 开始。
 
-**（3）筛选 hit 数量大于 20 的事件**
+#### 1.3.3 筛选 hit 数量大于 20 的事件
 
 ```cpp
 tree->Scan("Entry$:FDC0_nhits", "FDC0_nhits>20", "", 100);
@@ -71,7 +74,7 @@ tree->Scan("Entry$:FDC0_nhits", "FDC0_nhits>20", "", 100);
 
 从前 100 个事件中筛选 `FDC0_nhits>20` 的事件。
 
-**（4）筛选 X、Y 方向均至少有 3 个有效层的事件**
+#### 1.3.4 筛选 X、Y 方向均至少有 3 个有效层的事件
 
 ```cpp
 tree->Scan(
@@ -84,7 +87,7 @@ tree->Scan(
 
 其中 `&&` 表示逻辑与，两个条件必须同时满足。
 
-**（5）检查 vector 长度是否等于 hit 数量**
+#### 1.3.5 检查 vector 长度是否等于 hit 数量
 
 ```cpp
 tree->Scan(
@@ -97,7 +100,7 @@ tree->Scan(
 
 只显示前 100 个事件中，两者不相等的事件。
 
-**（6）调整输出列宽**
+#### 1.3.6 调整输出列宽
 
 ```cpp
 tree->Scan(
@@ -110,10 +113,10 @@ tree->Scan(
 
 设置列宽为 20 个字符，避免变量名称被截断。
 
-## 4. Scan()、Draw() 和 GetEntries() 的区别
+### 1.4 Scan()、Draw() 和 GetEntries() 的区别
 
 | 方法 | 用途 | 示例 |
-|---|---|---|
+| --- | --- | --- |
 | `Scan()` | 打印事件的具体数值 | `tree->Scan("FDC0_nhits");` |
 | `Draw()` | 绘制变量的统计分布 | `tree->Draw("FDC0_nhits");` |
 | `GetEntries()` | 统计满足条件的事件数量 | `tree->GetEntries("FDC0_nhits>20");` |
@@ -129,3 +132,76 @@ cout << "Selected events = " << n << endl;
 ```
 
 **总结：** `Scan()` 适合逐事件检查数据，`Draw()` 适合观察整体分布，`GetEntries()` 适合统计满足条件的事件数量。
+
+## 2. ROOT 文件中存储的 TAsciiFile 用法
+
+```text
+InputRootFiles git:(main) ✗ root RIBL.root
+add include path : /Users/yemingxin/anaroot/src/install/include
+reading libXMLParser.so
+reading libananadeko.dylib
+reading libanacore.dylib
+reading libanabrips.dylib
+reading libanadali.dylib
+reading libanasamurai.dylib
+reading libanacatana.dylib
+reading libanaespri.dylib
+reading libanawinds.dylib
+reading libanasilicons.dylib
+reading libanatogaxsi.dylib
+reading libanaloop.dylib
+reading libanaloopexample.dylib
+reading libanaloopencexample.dylib
+root [0]
+Attaching file RIBL.root as _file0...
+(TFile *) 0x76773df800
+root [1] .ls
+TFile**		RIBL.root
+ TFile*		RIBL.root
+  KEY: TParameter<int>	RandomSeed;1
+  KEY: TNamed	RandomSeedMode;1	automatic
+  KEY: TAsciiFile	G4RandomFinalState;1	.geant4_random_state
+  KEY: TAsciiFile	EventGenerator;1	RIBL_4He_p.reaction
+  KEY: TAsciiFile	DetectorConfiguration;1	RIBLArray.detector
+  KEY: TTree	SimulatedTree;1	Data created / analysed with the nptool package
+root [2] TFile*f = _file0;
+root [3] TAsciiFile* eventConfig = (TAsciiFile*)f->Get("EventGenerator");
+root [4] eventConfig->Print()
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% Reaction file for 1H(4He,p)4He elastic scattering %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Beam
+ Particle= 4He
+ Energy= 126.973 MeV
+ SigmaEnergy= 1.0 MeV
+ SigmaThetaX= 0.1 deg
+ SigmaPhiY= 0.1 deg
+ SigmaX= 10 mm
+ SigmaY= 10 mm
+ MeanThetaX= 0 deg
+ MeanPhiY= 0 deg
+ MeanX= -4 mm
+ MeanY= 3 mm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+TwoBodyReaction
+ Beam= 4He
+ Target= 1H
+ Light= 1H
+ Heavy= 4He
+ ExcitationEnergy3= 0.0 MeV
+ ExcitationEnergy4= 0.0 MeV
+ % EXFOR C1210-002: 31 MeV p+4He elastic distribution in direct-p CM angle.
+ % NPTool applies theta_CM(recoil p) = 180 deg - theta internally.
+ CrossSectionPath= /Users/yemingxin/nptool/Projects/RIBLArray/CrossSection/4He_p_elastic.txt CS4HeP
+ ShootLight= 1
+ ShootHeavy= 1
+
+
+root [5] TParameter<int>* seed = (TParameter<int>*)f->Get("RandomSeed");
+root [6] seed->GetVal()
+(const int) 803735287
+root [7]
+```
+
+

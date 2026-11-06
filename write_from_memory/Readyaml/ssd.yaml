@@ -1,0 +1,195 @@
+# 功能：TOGAXSI SSD 逐层重建几何，初值来自同目录 alphap.root 的 DetectorConfiguration。
+# 方法：局域条带坐标 = 中心局域坐标 + strip_sign*(StripID-(nstrips+1)/2)*pitch_mm。
+# 注意事项：长度 mm，StripID 从 1 开始；各层平行于组 XY 平面，不支持单层独立倾斜。
+# 各层 center_world_mm 为绝对世界坐标；整体平移时同时移动 origin 和所有层中心。
+# Cluster +Z 沿束流下游；Recoil +Z 径向向外，+X 指向世界 -Z，+Y=+Z叉乘+X。
+# nstrips/pitch 依据生成文件中已核对的 StripID 与缓存条带中心，并与模拟 SSD 常量一致。
+# 四舍五入的径向轴与原 ROT 有微小差异；Y1 固定层平面近似由测试量化。
+cluster:
+  Right:
+    enabled: true
+    origin_world_mm: [0, 0, 0]
+    axis_x_world: [1, 0, 0]
+    axis_y_world: [0, 1, 0]
+    axis_z_world: [0, 0, 1]
+    layers:
+      X1:
+        center_world_mm: [-83.46, 1.8, 226.8]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: 1
+      Y1:
+        center_world_mm: [-84, 1.8, 231.3]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+      X2:
+        center_world_mm: [-90.48, 1.8, 285.5]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: 1
+      Y2:
+        center_world_mm: [-91, 1.8, 290]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+  Left:
+    enabled: true
+    origin_world_mm: [0, 0, 0]
+    axis_x_world: [1, 0, 0]
+    axis_y_world: [0, 1, 0]
+    axis_z_world: [0, 0, 1]
+    layers:
+      X1:
+        center_world_mm: [83.46, 1.8, 226.8]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: 1
+      Y1:
+        center_world_mm: [84, 1.8, 231.3]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+      X2:
+        center_world_mm: [90.48, 1.8, 285.5]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: 1
+      Y2:
+        center_world_mm: [91, 1.8, 290]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+recoil:
+  LU:
+    enabled: true
+    origin_world_mm: [51.96, 30, 42.85]
+    axis_x_world: [0, 0, -1]
+    axis_y_world: [-0.5000110003630133, 0.866019052628739, 0]
+    axis_z_world: [0.866019052628739, 0.5000110003630133, 0]
+    layers:
+      X1:
+        center_world_mm: [51.96, 30, 42.85]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: -1
+      X2:
+        center_world_mm: [77.94, 45, 73.9]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: -1
+      Y1:
+        center_world_mm: [86.6, 50, 80.9]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+  LD:
+    enabled: true
+    origin_world_mm: [51.96, -30, 42.85]
+    axis_x_world: [0, 0, -1]
+    axis_y_world: [0.5000110003630133, 0.866019052628739, 0]
+    axis_z_world: [0.866019052628739, -0.5000110003630133, 0]
+    layers:
+      X1:
+        center_world_mm: [51.96, -30, 42.85]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: -1
+      X2:
+        center_world_mm: [77.94, -45, 73.9]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: -1
+      Y1:
+        center_world_mm: [86.6, -50, 80.9]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+  RU:
+    enabled: true
+    origin_world_mm: [-51.96, 30, 42.85]
+    axis_x_world: [0, 0, -1]
+    axis_y_world: [-0.5000110003630133, -0.866019052628739, 0]
+    axis_z_world: [-0.866019052628739, 0.5000110003630133, 0]
+    layers:
+      X1:
+        center_world_mm: [-51.96, 30, 42.85]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: -1
+      X2:
+        center_world_mm: [-77.94, 45, 73.9]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: -1
+      Y1:
+        center_world_mm: [-86.6, 50, 80.9]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+  RD:
+    enabled: true
+    origin_world_mm: [-51.96, -30, 42.85]
+    axis_x_world: [0, 0, -1]
+    axis_y_world: [0.5000110003630133, -0.866019052628739, 0]
+    axis_z_world: [-0.866019052628739, -0.5000110003630133, 0]
+    layers:
+      X1:
+        center_world_mm: [-51.96, -30, 42.85]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: -1
+      X2:
+        center_world_mm: [-77.94, -45, 73.9]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: -1
+      Y1:
+        center_world_mm: [-86.6, -50, 80.9]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1
+  UP:
+    enabled: false
+    origin_world_mm: [0, 60, 42.85]
+    axis_x_world: [0, 0, -1]
+    axis_y_world: [-1, 0, 0]
+    axis_z_world: [0, 1, 0]
+    layers:
+      X1:
+        center_world_mm: [0, 60, 42.85]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: -1
+      X2:
+        center_world_mm: [0, 90, 73.9]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: -1
+      Y1:
+        center_world_mm: [0, 100, 80.9]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: -1
+  DOWN:
+    enabled: false
+    origin_world_mm: [0, -60, 42.85]
+    axis_x_world: [0, 0, -1]
+    axis_y_world: [1, 0, 0]
+    axis_z_world: [0, -1, 0]
+    layers:
+      X1:
+        center_world_mm: [0, -60, 42.85]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: -1
+      X2:
+        center_world_mm: [0, -90, 73.9]
+        nstrips: 988
+        pitch_mm: 0.099595141700404857
+        strip_sign: -1
+      Y1:
+        center_world_mm: [0, -100, 80.9]
+        nstrips: 768
+        pitch_mm: 0.10195312499999999
+        strip_sign: 1

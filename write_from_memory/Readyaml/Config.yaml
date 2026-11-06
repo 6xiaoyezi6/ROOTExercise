@@ -1,0 +1,45 @@
+
+# 整数
+DetectorID: 1
+NumberOfLayers: 6
+
+# 浮点数
+BeamEnergy: 150.0
+SigmaEnergy: 1.5
+Threshold: 1.0e-3
+
+# 字符串
+DetectorName: "RecoilSSD"
+Particle: "10Be"
+
+# 布尔值
+EnableDetector: true
+EnableSmearing: false
+
+# 空值
+CalibrationFactor: null
+
+# 数组（行内写法）
+Position: [0.0, 0.0, 82.0]
+
+# 数组（多行写法）
+EnergyLevels:
+  - 0.0
+  - 3.368
+  - 6.179
+  - 7.54
+
+# 字典 / 映射
+Resolution:
+  SigmaX: 0.1
+  SigmaY: 0.25
+  SigmaZ: 1.5
+
+# 嵌套结构
+Detectors:
+  - ID: 1
+    Name: "SSD1"
+    Position: [0.0, 0.0, 100.0]
+  - ID: 2
+    Name: "SSD2"
+    Position: [0.0, 0.0, 150.0]

@@ -1,0 +1,166 @@
+{
+  "feature_names": [
+    "ADC",
+    "rdcX",
+    "rdcY",
+    "NaIID"
+  ],
+  "feature_units": [
+    "channel",
+    "mm",
+    "mm",
+    "1"
+  ],
+  "target_name": "ETrue",
+  "target_definition": "Proton kinetic energy at emission vertex (MeV)",
+  "layer_sizes": [
+    4,
+    64,
+    64,
+    64,
+    1
+  ],
+  "activation": "Tanh",
+  "dtype": "float64",
+  "device": "cpu",
+  "adc_formula": "Q=(ENaI-C)/(A-B*(ENaI-C))",
+  "adc_quantized": false,
+  "adc_added_noise": false,
+  "calibration_path": "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/ADCToProtonEnergy/naiCalibOutput.txt_v22",
+  "calibration_sha256": "e8a0d6c5c0441b800ef5b3ce49a25f577bdafd32006c97bd6fa194f87a1aa99b",
+  "calibration_columns": [
+    "side",
+    "bar",
+    "A",
+    "B",
+    "C"
+  ],
+  "calibration_table": [
+    [
+      0.0,
+      0.0,
+      0.037055376,
+      -1.109e-05,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.040897139,
+      4.25251e-06,
+      0.0
+    ],
+    [
+      0.0,
+      2.0,
+      0.040223661,
+      3.28061e-05,
+      0.0
+    ],
+    [
+      0.0,
+      3.0,
+      0.045517443,
+      5.88253e-05,
+      0.0
+    ],
+    [
+      0.0,
+      4.0,
+      0.040705401,
+      5.64304e-05,
+      0.0
+    ],
+    [
+      0.0,
+      5.0,
+      0.038483988,
+      2.04592e-05,
+      0.0
+    ],
+    [
+      0.0,
+      6.0,
+      0.044130466,
+      4.8302e-05,
+      0.0
+    ],
+    [
+      1.0,
+      0.0,
+      0.031353328,
+      5.07179e-05,
+      0.0
+    ],
+    [
+      1.0,
+      1.0,
+      0.034760839,
+      -2.2156e-05,
+      0.0
+    ],
+    [
+      1.0,
+      2.0,
+      0.035086376,
+      1.39805e-05,
+      0.0
+    ],
+    [
+      1.0,
+      3.0,
+      0.046554087,
+      3.20978e-05,
+      0.0
+    ],
+    [
+      1.0,
+      4.0,
+      0.033745085,
+      5.32984e-05,
+      0.0
+    ],
+    [
+      1.0,
+      5.0,
+      0.032496346,
+      5.34077e-05,
+      0.0
+    ],
+    [
+      1.0,
+      6.0,
+      0.035913981,
+      7.25096e-06,
+      0.0
+    ]
+  ],
+  "calibration_text": "0\t0\t0.037055376\t-0.00001109\t0\n0\t1\t0.040897139\t4.25251E-06\t0\n0\t2\t0.040223661\t3.28061E-05\t0\n0\t3\t0.045517443\t5.88253E-05\t0\n0\t4\t0.040705401\t5.64304E-05\t0\n0\t5\t0.038483988\t2.04592E-05\t0\n0\t6\t0.044130466\t0.000048302\t0\n1\t0\t0.031353328\t5.07179E-05\t0\n1\t1\t0.034760839\t-0.000022156\t0\n1\t2\t0.035086376\t1.39805E-05\t0\n1\t3\t0.046554087\t3.20978E-05\t0\n1\t4\t0.033745085\t5.32984E-05\t0\n1\t5\t0.032496346\t5.34077E-05\t0\n1\t6\t0.035913981\t7.25096E-06\t0\n",
+  "arm_calibration_mapping": {
+    "Left": {
+      "side": 1,
+      "id_min": 1
+    },
+    "Right": {
+      "side": 0,
+      "id_min": 8
+    }
+  },
+  "epochs": 2000,
+  "batch_size": 256,
+  "learning_rate": 0.0001,
+  "minimum_learning_rate": 1e-06,
+  "cosine_epochs": 2000,
+  "scheduler": "CosineAnnealingLR",
+  "optimizer": "Adam",
+  "loss": "SmoothL1Loss on standardized ETrue",
+  "smooth_l1_beta": 0.01,
+  "train_fraction": 0.8,
+  "arm_seeds": {
+    "Left": 42,
+    "Right": 43
+  },
+  "weight_decay": 0.0,
+  "checkpoint_rule": "final_epoch",
+  "torch_version": "2.5.1"
+}
