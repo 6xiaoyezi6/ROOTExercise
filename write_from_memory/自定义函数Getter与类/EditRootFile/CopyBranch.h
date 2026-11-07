@@ -1,4 +1,8 @@
-
+// 功能：读取 ROOT 文件和 TTree，复制全部或指定分支，并提供 ExWithoutCut 的读取接口。
+// 方法：ReadTree 管理输入；CopyAllBranch 继承 ReadTree，管理输出并复制树；
+//       CopyBranch 和 DrawBranch 继承 CopyAllBranch，分别选择分支和绑定分支。
+// 注意事项：需配置 ROOT、NPTool 和 libNPTimer；输入树和分支需存在，复制会覆盖输出文件。
+//           先调用 GetInputEntry() 读取事件，再调用 getter；输入文件由 ReadTree 释放。
 #ifndef COPYBRANCH_H
 #define COPYBRANCH_H
 
@@ -9,17 +13,45 @@
 #include "MyTools/TTimer.h"
 #include <iostream>
 
-class CopyAllBranch {
+/* 类的继承关系
+class ReadTree
+└── class CopyAllBranch
+    ├── class CopyBranch
+    └── class DrawBranch
+*/
+
+class ReadTree {
 public:
   TFile *InputFile = nullptr;
   TTree *InputTree = nullptr;
+
+  ReadTree(TString InputRootPath, TString InputTreeName) 
+  {
+    InputFile = TFile::Open(InputRootPath.Data(), "READ");
+    InputTree = (TTree *)InputFile->Get(InputTreeName.Data());
+  }
+
+  // 下面这两个不能合并在一起
+  Long64_t GetInputEntries() { return InputTree->GetEntriesFast(); }
+  void GetInputEntry(Long64_t entry) { InputTree->GetEntry(entry); }
+
+  //通过父类指针删除子类对象，要使用virtual
+  virtual ~ReadTree() {
+    delete InputFile;
+  }
+};
+
+/////////////////////////////////////////////////////////////////////
+
+class CopyAllBranch : public ReadTree {
+public:
   TFile *OutputFile = nullptr;
   TTree *OutputTree = nullptr;
 
   // 供派生类调用：只打开输入，不复制树
-  CopyAllBranch(TString InputRootPath, TString InputTreeName) {
-    InputFile = TFile::Open(InputRootPath.Data(), "READ");
-    InputTree = (TTree *)InputFile->Get(InputTreeName.Data());
+  //子类调用父类的构造函数，使用C++的「构造函数成员初始化列表」
+  CopyAllBranch(TString InputRootPath, TString InputTreeName)
+      : ReadTree(InputRootPath, InputTreeName) {
   }
 
   // 复制当前启用的 Branch 以及全部 Event
@@ -41,10 +73,9 @@ public:
     CopyTree(OutputRootPath, OutputTreeName);
   }
 
-  //通过父类指针删除子类对象，要使用virtual
-  virtual ~CopyAllBranch() {
+  // 输入文件由 ReadTree 的析构函数释放
+  ~CopyAllBranch() override {
     delete OutputFile;
-    delete InputFile;
   }
 };
 
@@ -57,7 +88,8 @@ private:
 public:
   CopyBranch(TString InputRootPath, TString OutputRootPath,
              TString InputTreeName, TString OutputTreeName)
-      : CopyAllBranch(InputRootPath, InputTreeName) {
+      : CopyAllBranch(InputRootPath, InputTreeName) //注意，不能直接调用ReadTree
+  {
     // 关闭所有 Branch
     InputTree->SetBranchStatus("*", 0);
 
@@ -87,10 +119,6 @@ public:
     // 绑定分支
     InputTree->SetBranchAddress("ExWithoutCut", &ExWithoutCut);
   }
-
-  // 下面这两个不能合并在一起
-  Long64_t GetInputEntries() { return InputTree->GetEntriesFast(); }
-  void GetInputEntry(Long64_t entry) { InputTree->GetEntry(entry); }
 
   Double_t GetExWithoutCut() { return ExWithoutCut; }
 };
