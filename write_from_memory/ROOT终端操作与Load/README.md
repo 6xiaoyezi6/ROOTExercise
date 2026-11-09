@@ -259,3 +259,14 @@ root [1] SimulatedTree->GetBranch("ReactionConditions")->GetClassName()
 (const char *) "TReactionConditions"
 root [2] TClass::GetClass("TReactionConditions")->GetListOfMethods()->ls()
 ```
+
+
+## 3.ROOT终端读取一个root文件中的两个树
+```cpp
+root [1] TFile*f = _file0;
+root [2] TTree*tree = (TTree*)f->Get("SimulatedTree");
+root [3] TTree*reco = (TTree*)f->Get("ReconstructionTree");
+root [4] tree->AddFriend(reco,"reco");
+root [5] // 将 ReconstructionTree 作为 SimulatedTree 的 Friend
+root [7] tree->Draw("reco.VertexWorldX-ReactionConditions.GetVertexPositionX()>>h(100,-5,5)","VertexWorldX!=-999");
+```
