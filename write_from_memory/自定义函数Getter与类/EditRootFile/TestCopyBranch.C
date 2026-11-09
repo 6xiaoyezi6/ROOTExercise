@@ -1,5 +1,5 @@
 // 功能：从 Ex5sigma.root 复制指定分支和全部分支，并绘制 ExWithoutCut 谱。
-// 方法：CopyBranch 和 DrawBranch 继承 CopyAllBranch，共用文件和树的管理；
+// 方法：通过 ReadTree.h 中的继承关系共用文件和树的管理，路径按本宏所在目录拼接；
 //       使用 DrawBranch 的事件读取接口和 getter 逐事件填充 TH1D。
 // 注意事项：需配置 NPTool 环境和 libNPTimer；运行会覆盖两个输出 ROOT 文件。
 //           直方图脱离文件管理，关闭文件后仍可显示；分箱和范围在函数开头调整。
@@ -7,16 +7,18 @@
 #ifdef __CLING__
 R__LOAD_LIBRARY(libNPTimer)
 #endif
-#include "CopyBranch.h"
+#include "ReadTree.h"
 #include "TString.h"
+#include "TSystem.h"
 #include "TCanvas.h"
 #include "TH1D.h"
 
 void TestCopyBranch() {
 
-  TString InputRootPath = "Ex5sigma.root";
-  TString SelectedRootPath = "ExSelected.root";
-  TString AllRootPath = "ExAll.root";
+  TString dir = gSystem->DirName(__FILE__);
+  TString InputRootPath = dir + "/Ex5sigma.root";
+  TString SelectedRootPath = dir + "/ExSelected.root";
+  TString AllRootPath = dir + "/ExAll.root";
   TString InputTreeName = "tree";
   TString OutputTreeName = "tree";
 
@@ -34,7 +36,8 @@ void TestCopyBranch() {
   }
   TCanvas *c1 = new TCanvas("c1", "c1", 800, 600);
   h1->Draw("HIST");
-  c1->SaveAs("aa.pdf");
+  TString OutputPdfPath = dir + "/aa.pdf";
+  c1->SaveAs(OutputPdfPath.Data());
 
   // 删除派生类对象时会自动调用基类析构函数，统一释放文件
   delete copyAll;

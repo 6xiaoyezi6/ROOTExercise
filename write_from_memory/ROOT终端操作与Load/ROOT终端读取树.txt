@@ -1,0 +1,83 @@
+SimulatedTree->Print()
+
+查看 Espri 分支：
+
+  TEspriData *espri = nullptr;
+  SimulatedTree->SetBranchAddress("Espri",&espri);
+  SimulatedTree->GetEntry(0);
+  espri->Dump();
+
+  SimulatedTree->Draw("ReactionConditions.GetTheta_WorldFrame(0)>>hTheta(180,0,180)")
+
+  设置坐标轴：
+
+  hTheta->GetXaxis()->SetTitle("#theta_{lab} (deg)");
+  hTheta->GetYaxis()->SetTitle(Form("Counts / %.3g deg",hTheta->GetBinWidth(1)));
+
+  gPad->SaveAs("theta_world.pdf");
+
+
+  TEspriData::Class()->GetListOfDataMembers()->Print()
+
+
+
+  根本原因是两个函数的参数类型不同，而 TTree::Draw 不是普通的 C++ 函数调用。
+
+  double GetTheta(const int &i) const;          // 引用传参
+  double GetTheta_WorldFrame(const int i) const; // 值传参
+
+  普通 C++ 中：
+
+  rc->GetTheta(0);
+
+  编译器会创建一个临时 int，再把它的地址绑定给 const int&，所以完全合法。
+
+  但 TTree::Draw 经过：
+
+  TTree::Draw
+  → TTreeFormula
+  → ROOT 反射字典
+  → TMethodCall
+
+  这里不是正常编译调用。ROOT 6.36 的反射调用不能正确处理这个 const int& 实参，最
+  终把参数错误地传给 GetTheta()，导致 segmentation violation。
+
+  而 GetTheta_WorldFrame(const int i) 接收的是普通整数值，ROOT 只需要直接传入数
+  值 0，因此可以运行。
+
+  需要注意：这两个函数物理意义并不相同。
+
+  GetTheta(0)
+
+  直接返回：
+
+  fRC_Theta[0]
+
+  即束流坐标系中的角度。
+
+  GetTheta_WorldFrame(0)
+
+  则由粒子的世界坐标系方向重新计算：
+
+  GetParticleDirection(0).Theta()
+
+  在 Espri.root 第一个事件中，我实际读到：
+
+  GetTheta(0)            = 42.0114°
+  GetTheta_WorldFrame(0) = 42.4201°
+
+  因此，如果你真正想画 GetTheta(0)，等价且安全的写法是：
+
+  SimulatedTree->Draw(
+      "ReactionConditions.fRC_Theta[0]>>hTheta(180,0,180)"
+  );
+
+  如果想从源码层解决，可以把 /Users/yemingxin/nptool/NPLib/Physics/
+  TReactionConditions.h:158 改为值传参并重新编译字典：
+
+  double GetTheta(int i) const { return fRC_Theta[i]; }
+
+  这样 GetTheta(0) 才能可靠地用于 TTree::Draw。s
+
+
+  

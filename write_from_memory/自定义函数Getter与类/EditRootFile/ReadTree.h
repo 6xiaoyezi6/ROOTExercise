@@ -1,10 +1,10 @@
 // 功能：读取 ROOT 文件和 TTree，复制全部或指定分支，并提供 ExWithoutCut 的读取接口。
 // 方法：ReadTree 管理输入；CopyAllBranch 继承 ReadTree，管理输出并复制树；
-//       CopyBranch 和 DrawBranch 继承 CopyAllBranch，分别选择分支和绑定分支。
+//       CopyBranch 和 DrawBranch 继承 CopyAllBranch，分别选择分支和绑定分支，各类成员均为 public。
 // 注意事项：需配置 ROOT、NPTool 和 libNPTimer；输入树和分支需存在，复制会覆盖输出文件。
 //           先调用 GetInputEntry() 读取事件，再调用 getter；输入文件由 ReadTree 释放。
-#ifndef COPYBRANCH_H
-#define COPYBRANCH_H
+#ifndef READTREE_H
+#define READTREE_H
 
 #include "RtypesCore.h"
 #include "TFile.h"
@@ -82,10 +82,9 @@ public:
 /////////////////////////////////////////////////////////////////////
 
 class CopyBranch : public CopyAllBranch {
-private:
+public:
   NPL::TTimer *timer = new NPL::TTimer();
 
-public:
   CopyBranch(TString InputRootPath, TString OutputRootPath,
              TString InputTreeName, TString OutputTreeName)
       : CopyAllBranch(InputRootPath, InputTreeName) //注意，不能直接调用ReadTree
@@ -110,10 +109,9 @@ public:
 /////////////////////////////////////////////////////////////////////
 
 class DrawBranch : public CopyAllBranch {
-private:
+public:
   Double_t ExWithoutCut;
 
-public:
   DrawBranch(TString InputRootPath, TString InputTreeName)
       : CopyAllBranch(InputRootPath, InputTreeName) {
     // 绑定分支

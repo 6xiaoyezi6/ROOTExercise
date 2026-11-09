@@ -1,3 +1,4 @@
+
 # ROOT 终端操作
 
 ## 1. TTree::Scan() 使用说明
@@ -17,9 +18,9 @@ tree->Scan("Entry$:FDC0_nhits:Length$(FDC0_TDC):FDC0_nlayerx:FDC0_nlayery", "", 
 输出结果：
 
 ```text
-************************************************************************
+********************************************************************************************************
 *    Row   *    Entry$ * FDC0_nhit * Length$(F * FDC0_nlay * FDC0_nlay *
-************************************************************************
+********************************************************************************************************
 *        0 *         0 *        34 *        34 *         4 *         4 *
 *        1 *         1 *        27 *        27 *         0 *         0 *
 *        2 *         2 *        11 *        11 *         4 *         4 *
@@ -30,7 +31,7 @@ tree->Scan("Entry$:FDC0_nhits:Length$(FDC0_TDC):FDC0_nlayerx:FDC0_nlayery", "", 
 *        7 *         7 *        27 *        27 *         4 *         0 *
 *        8 *         8 *        17 *        17 *         4 *         4 *
 *        9 *         9 *         0 *         0 *         0 *         0 *
-************************************************************************
+********************************************************************************************************
 ```
 
 各变量含义：
@@ -156,14 +157,14 @@ root [0]
 Attaching file RIBL.root as _file0...
 (TFile *) 0x76773df800
 root [1] .ls
-TFile**		RIBL.root
- TFile*		RIBL.root
-  KEY: TParameter<int>	RandomSeed;1
-  KEY: TNamed	RandomSeedMode;1	automatic
-  KEY: TAsciiFile	G4RandomFinalState;1	.geant4_random_state
-  KEY: TAsciiFile	EventGenerator;1	RIBL_4He_p.reaction
-  KEY: TAsciiFile	DetectorConfiguration;1	RIBLArray.detector
-  KEY: TTree	SimulatedTree;1	Data created / analysed with the nptool package
+TFile**     RIBL.root
+ TFile*     RIBL.root
+  KEY: TParameter<int>  RandomSeed;1
+  KEY: TNamed   RandomSeedMode;1    automatic
+  KEY: TAsciiFile   G4RandomFinalState;1    .geant4_random_state
+  KEY: TAsciiFile   EventGenerator;1    RIBL_4He_p.reaction
+  KEY: TAsciiFile   DetectorConfiguration;1 RIBLArray.detector
+  KEY: TTree    SimulatedTree;1 Data created / analysed with the nptool package
 root [2] TFile*f = _file0;
 root [3] TAsciiFile* eventConfig = (TAsciiFile*)f->Get("EventGenerator");
 root [4] eventConfig->Print()
@@ -204,4 +205,57 @@ root [6] seed->GetVal()
 root [7]
 ```
 
+### 2.1 查看 ReactionConditions 分支
 
+```cpp
+SimulatedTree->GetBranch("ReactionConditions")->Print();
+```
+
+或
+
+```cpp
+SimulatedTree->Print("ReactionConditions*");
+```
+
+用来看 `ReactionConditions` 分支中的内容。
+
+### 2.2 只列出顶层分支
+
+```text
+root [2] SimulatedTree->Print("toponly")
+********************************************************************************************************
+*Tree    :SimulatedTree: Data created / analysed with the nptool package        *
+*Entries :       20 : Total =          164793 bytes  File  Size =      57777 *
+*        :          : Tree compression factor =   1.68                       *
+********************************************************************************************************
+branch: EventID                    104
+branch: ReactionSkipped            111
+branch: InteractionCoordinates      6820
+branch: RIBL                     16141
+branch: ReactionChannel            112
+branch: InitialConditions         4662
+branch: ReactionConditions        6841
+branch: TrackInfo                10410
+branch: Run                        134
+root [11] .!clear
+```
+
+### 2.3 ROOT 终端执行 Shell 命令
+
+`.!` 是 ROOT 提供的特殊前缀，意思是：把后面的内容交给系统 shell 执行。
+
+例如：
+
+```text
+.! clear     // 清屏
+.! pwd       // 显示当前目录
+.! ls        // 列出文件
+```
+
+### 2.4 查看 ROOT 文件中有哪些 Getter 函数
+
+```cpp
+root [1] SimulatedTree->GetBranch("ReactionConditions")->GetClassName()
+(const char *) "TReactionConditions"
+root [2] TClass::GetClass("TReactionConditions")->GetListOfMethods()->ls()
+```

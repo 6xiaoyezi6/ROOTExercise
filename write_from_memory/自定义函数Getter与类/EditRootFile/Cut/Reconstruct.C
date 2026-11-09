@@ -1,3 +1,6 @@
+// 功能：读取 alphap.root，绘制 ClusterGAGG 与 DeltaEGAGG 的首条能量记录关联图。
+// 方法：按本宏所在目录定位输入，绑定 ClusterGAGG 分支，逐事件填充二维直方图。
+// 注意事项：需配置 ROOT、NPTool 和 libNPClusterGAGG；两个能量记录均非空才填图，能量单位为 MeV。
 #include "TCanvas.h"
 #include "TClusterGAGGData.h"
 #include "TFile.h"
@@ -5,6 +8,7 @@
 #include "TROOT.h"
 #include "TString.h"
 #include "TStyle.h"
+#include "TSystem.h"
 #include "TTree.h"
 #include <iostream>
 
@@ -14,7 +18,8 @@ R__LOAD_LIBRARY(libNPClusterGAGG)
 
 void Reconstruct()
 {
-  TString InputRootPath = "alphap.root";
+  TString dir = gSystem->DirName(__FILE__);
+  TString InputRootPath = dir + "/alphap.root";
   TFile *f = TFile::Open(InputRootPath.Data(), "READ");
   TTree *tree = (TTree*)f->Get("SimulatedTree");
 
