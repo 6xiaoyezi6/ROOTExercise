@@ -268,5 +268,16 @@ root [2] TTree*tree = (TTree*)f->Get("SimulatedTree");
 root [3] TTree*reco = (TTree*)f->Get("ReconstructionTree");
 root [4] tree->AddFriend(reco,"reco");
 root [5] // 将 ReconstructionTree 作为 SimulatedTree 的 Friend
-root [7] tree->Draw("reco.VertexWorldX-ReactionConditions.GetVertexPositionX()>>h(100,-5,5)","VertexWorldX!=-999");
+root [6] tree->Draw("reco.VertexWorldX_ByClusterTrack-ReactionConditions.GetVertexPositionX()>>h(100,-5,5)","reco.VertexWorldX_ByClusterTrack!=-999");
+root [7] tree->Draw("reco.VertexWorldX_ByClusterTrack-ReactionConditions.GetVertexPositionX()>>h(100,-5,5)","reco.VertexWorldX_ByClusterTrack!=-999 && reco.ClusterSSDSide==\"Left\"");
 ```
+
+root [7] ReconstructionTree->Draw("(RecoilSiEnergy+RecoilGAGGEnergy):RecoilLineVectorBeam_ByClusterTrack.Theta()*TMath::RadToDeg()>>h1(600,20,80,9000,0,300)","R(long long) 2728799","colz")
+root [9] NPL::NuclearMass::Nuclide H1 = NPL::NuclearMass::Get("1H");
+root [10] NPL::NuclearMass::Nuclide He4 = NPL::NuclearMass::Get("4He");
+root [11] NPL::NuclearMass::Nuclide H3 = NPL::NuclearMass::Get("3H");
+root [12] auto g1 = NPL::TTwoBodyKinematics::EnergyAngleProton(200,0,He4.MassAMU,H1.MassAMU,H1.MassAMU,He4.MassAMU,kRed,1,1,0.5)
+(TMultiGraph *) 0x74b189b410
+root [13] g1->Draw("L")
+root [14] auto g2 = NPL::TTwoBodyKinematics::EnergyAngleProton(200,0,H3.MassAMU,(TMultiGraph *) 0x74afe75500sAMU,kRed,1,1,0.5)
+root [15] g2->Draw("L")
