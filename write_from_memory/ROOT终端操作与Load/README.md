@@ -1,4 +1,3 @@
-
 # ROOT 终端操作
 
 ## 1. TTree::Scan() 使用说明
@@ -12,6 +11,17 @@
 ```cpp
 tree->Scan("Entry$:FDC0_nhits:Length$(FDC0_TDC):FDC0_nlayerx:FDC0_nlayery", "", "", 10);
 ```
+```cpp
+tree->Scan(
+    "Entry$:FDC0_nhits:Length$(FDC0_TDC):FDC0_nlayerx:FDC0_nlayery",
+    "",
+    "colsize=20",
+    10
+);
+```
+
+设置列宽为 20 个字符，避免变量名称被截断。
+
 
 该命令表示：**从第 0 个事件开始，扫描前 10 个事件，显示 FDC0 的 hit 数量、TDC vector 长度以及 X、Y 方向的有效层数。**
 
@@ -101,18 +111,7 @@ tree->Scan(
 
 只显示前 100 个事件中，两者不相等的事件。
 
-#### 1.3.6 调整输出列宽
 
-```cpp
-tree->Scan(
-    "Entry$:FDC0_nhits:Length$(FDC0_TDC):FDC0_nlayerx:FDC0_nlayery",
-    "",
-    "colsize=20",
-    10
-);
-```
-
-设置列宽为 20 个字符，避免变量名称被截断。
 
 ### 1.4 Scan()、Draw() 和 GetEntries() 的区别
 
@@ -209,6 +208,7 @@ root [7]
 
 ```cpp
 SimulatedTree->GetBranch("ReactionConditions")->Print();
+SimulatedTree->GetBranch("ReactionConditions")->GetListOfBranches()->ls();
 ```
 
 或
@@ -260,8 +260,8 @@ root [1] SimulatedTree->GetBranch("ReactionConditions")->GetClassName()
 root [2] TClass::GetClass("TReactionConditions")->GetListOfMethods()->ls()
 ```
 
+## 3. ROOT 终端读取一个 ROOT 文件中的两个树
 
-## 3.ROOT终端读取一个root文件中的两个树
 ```cpp
 root [1] TFile*f = _file0;
 root [2] TTree*tree = (TTree*)f->Get("SimulatedTree");
@@ -272,12 +272,127 @@ root [6] tree->Draw("reco.VertexWorldX_ByClusterTrack-ReactionConditions.GetVert
 root [7] tree->Draw("reco.VertexWorldX_ByClusterTrack-ReactionConditions.GetVertexPositionX()>>h(100,-5,5)","reco.VertexWorldX_ByClusterTrack!=-999 && reco.ClusterSSDSide==\"Left\"");
 ```
 
-root [7] ReconstructionTree->Draw("(RecoilSiEnergy+RecoilGAGGEnergy):RecoilLineVectorBeam_ByClusterTrack.Theta()*TMath::RadToDeg()>>h1(600,20,80,9000,0,300)","R(long long) 2728799","colz")
+
+```cpp
+root [7] ReconstructionTree->Draw("(RecoilSiEnergy+RecoilGAGGEnergy+ProtonEnergyLossInTarget):RecoilLineVectorBeam_ByClusterTrack.Theta()*TMath::RadToDeg()>>h1(600,20,80,9000,0,300)","RecoilSiEnergy!=-999&&RecoilGAGGEnergy!=-999&&ProtonEnergyLossInTarget!=-999","colz")
 root [9] NPL::NuclearMass::Nuclide H1 = NPL::NuclearMass::Get("1H");
 root [10] NPL::NuclearMass::Nuclide He4 = NPL::NuclearMass::Get("4He");
 root [11] NPL::NuclearMass::Nuclide H3 = NPL::NuclearMass::Get("3H");
 root [12] auto g1 = NPL::TTwoBodyKinematics::EnergyAngleProton(200,0,He4.MassAMU,H1.MassAMU,H1.MassAMU,He4.MassAMU,kRed,1,1,0.5)
-(TMultiGraph *) 0x74b189b410
 root [13] g1->Draw("L")
-root [14] auto g2 = NPL::TTwoBodyKinematics::EnergyAngleProton(200,0,H3.MassAMU,(TMultiGraph *) 0x74afe75500sAMU,kRed,1,1,0.5)
+root [14] auto g2 = NPL::TTwoBodyKinematics::EnergyAngleProton(200,0,H3.MassAMU,H1.MassAMU,H1.MassAMU,H3.MassAMU,kRed,1,1,0.5);
 root [15] g2->Draw("L")
+```
+
+## 4. SimulatedTree 分支查看与 TTree::Draw 方法调用
+
+### 4.1 查看 SimulatedTree 的分支
+
+```cpp
+SimulatedTree->Print();
+```
+
+### 4.2 查看 Espri 分支
+
+```cpp
+TEspriData *espri = nullptr;
+SimulatedTree->SetBranchAddress("Espri", &espri);
+SimulatedTree->GetEntry(0);
+espri->Dump();
+```
+
+查看 `TEspriData` 类的数据成员：
+
+```cpp
+TEspriData::Class()->GetListOfDataMembers()->Print();
+```
+
+### 4.3 绘制世界坐标系中的角度并设置坐标轴
+
+```cpp
+SimulatedTree->Draw("ReactionConditions.GetTheta_WorldFrame(0)>>hTheta(180,0,180)");
+```
+
+设置坐标轴：
+
+```cpp
+hTheta->GetXaxis()->SetTitle("#theta_{lab} (deg)");
+hTheta->GetYaxis()->SetTitle(Form("Counts / %.3g deg", hTheta->GetBinWidth(1)));
+```
+
+保存图像：
+
+```cpp
+gPad->SaveAs("theta_world.pdf");
+```
+
+### 4.4 GetTheta() 和 GetTheta_WorldFrame() 的参数区别
+
+根本原因是两个函数的参数类型不同，而 `TTree::Draw` 不是普通的 C++ 函数调用。
+
+```cpp
+double GetTheta(const int &i) const;          // 引用传参
+double GetTheta_WorldFrame(const int i) const; // 值传参
+```
+
+普通 C++ 中：
+
+```cpp
+rc->GetTheta(0);
+```
+
+编译器会创建一个临时 `int`，再把它的地址绑定给 `const int&`，所以完全合法。
+
+但 `TTree::Draw` 经过：
+
+```text
+TTree::Draw
+→ TTreeFormula
+→ ROOT 反射字典
+→ TMethodCall
+```
+
+这里不是正常编译调用。ROOT 6.36 的反射调用不能正确处理这个 `const int&` 实参，最终把参数错误地传给 `GetTheta()`，导致 segmentation violation。
+
+而 `GetTheta_WorldFrame(const int i)` 接收的是普通整数值，ROOT 只需要直接传入数值 `0`，因此可以运行。
+
+需要注意：**这两个函数物理意义并不相同。**
+
+`GetTheta(0)` 直接返回：
+
+```cpp
+fRC_Theta[0]
+```
+
+即束流坐标系中的角度。
+
+`GetTheta_WorldFrame(0)` 则由粒子的世界坐标系方向重新计算：
+
+```cpp
+GetParticleDirection(0).Theta()
+```
+
+在 `Espri.root` 第一个事件中，我实际读到：
+
+```text
+GetTheta(0)            = 42.0114°
+GetTheta_WorldFrame(0) = 42.4201°
+```
+
+### 4.5 在 TTree::Draw 中调用 GetTheta() 的替代方法
+
+因此，如果你真正想画 `GetTheta(0)`，等价且安全的写法是：
+
+```cpp
+SimulatedTree->Draw(
+    "ReactionConditions.fRC_Theta[0]>>hTheta(180,0,180)"
+);
+```
+
+如果想从源码层解决，可以把 `/Users/yemingxin/nptool/NPLib/Physics/TReactionConditions.h:158` 改为值传参并重新编译字典：
+
+```cpp
+double GetTheta(int i) const { return fRC_Theta[i]; }
+```
+
+这样 `GetTheta(0)` 才能可靠地用于 `TTree::Draw`。
