@@ -1,4 +1,4 @@
-// 功能：从 Ex5sigma.root 复制指定分支和全部分支，并绘制 ExWithoutCut 谱。
+// 功能：从 Ex5sigma_10Be.root 复制指定分支和全部分支，并绘制 ExWithoutCut 谱。
 // 方法：CopyBranch 和 DrawBranch 继承 CopyAllBranch，共用文件和树的管理；
 //       使用 DrawBranch 的事件读取接口和 getter 逐事件填充 TH1D。
 // 注意事项：需配置 NPTool 环境和 libNPTimer；运行会覆盖两个输出 ROOT 文件。
@@ -14,7 +14,7 @@ R__LOAD_LIBRARY(libNPTimer)
 
 void TestCopyBranch() {
 
-  TString InputRootPath = "Ex5sigma.root";
+  TString InputRootPath = "Ex5sigma_10Be.root";
   TString SelectedRootPath = "ExSelected.root";
   TString AllRootPath = "ExAll.root";
   TString InputTreeName = "tree";

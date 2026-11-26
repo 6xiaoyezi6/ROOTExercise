@@ -1,9 +1,9 @@
-// 功能：从 Ex5sigma.root 复制指定分支和全部分支，并绘制 ExWithoutCut 谱。
+// 功能：从 Ex5sigma_10Be.root 复制指定分支和全部分支，并绘制 ExWithoutCut 谱。
 // 方法：通过 ReadTree.h 中的继承关系共用文件和树的管理，实验输入使用统一绝对路径，输出按本宏所在目录拼接；
 //       使用 DrawBranch 的事件读取接口和 getter 逐事件填充 TH1D。
 // 注意事项：需配置 NPTool 环境和 libNPTimer；运行会覆盖两个输出 ROOT 文件。
 //           直方图脱离文件管理，关闭文件后仍可显示；分箱和范围在函数开头调整。
-// 5sigma 实验输入：/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma.root。
+// 5sigma 实验输入：/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma_10Be.root。
 #include "RtypesCore.h"
 #ifdef __CLING__
 R__LOAD_LIBRARY(libNPTimer)
@@ -17,7 +17,7 @@ R__LOAD_LIBRARY(libNPTimer)
 void TestCopyBranch() {
 
   TString dir = gSystem->DirName(__FILE__);
-  TString InputRootPath = "/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma.root";
+  TString InputRootPath = "/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma_10Be.root";
   TString SelectedRootPath = dir + "/ExSelected.root";
   TString AllRootPath = dir + "/ExAll.root";
   TString InputTreeName = "tree";

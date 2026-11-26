@@ -1,5 +1,5 @@
 /*
- * 功能：读取 EspriEnergy/InputRootFiles/Espri.root 和统一的 Ex5sigma.root，按左右臂绘制两行五列能角图，
+ * 功能：读取 EspriEnergy/InputRootFiles/Espri.root 和统一的 Ex5sigma_10Be.root，按左右臂绘制两行五列能角图，
  *       五列为实验、实验加 BDC-RDC Z 的 5sigma 门、实验同时加 Z 门和 phi12 门、
  *       模拟停止筛选前及筛选后；
  *       另输出原三列 RDCX.pdf、RDCY.pdf，以及两列 RDCX_55_70.pdf、RDCY_55_70.pdf。
@@ -31,7 +31,7 @@
  *       五份 PDF 保存于 EspriEnergy/CheckPosition，运行会覆盖该目录内的同名 PDF；
  *       不创建输出目录，不保存 ROOT、PNG、CSV 或文本文件。
  * 运行：在 EspriEnergy 目录执行 root -l -b -q CheckPosition/CheckPosition.C
- * 5sigma 实验输入：/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma.root。
+ * 5sigma 实验输入：/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma_10Be.root。
  */
 
 #include <algorithm>
@@ -55,7 +55,7 @@
 
 namespace CheckPositionInternal {
 const char* const kSimulationFile = "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/InputRootFiles/Espri.root";
-const char* const kExperimentFile = "/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma.root";
+const char* const kExperimentFile = "/Users/yemingxin/RIKEN_Inelastic_Be/ppBe10/BackTracking/Ex5sigma_10Be.root";
 const char* const kOutputPdf = "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/CheckPosition/CheckPosition.pdf";
 const char* const kRdcOutputPdf[2] = {
     "/Users/yemingxin/ROOT_Exercise/MachineLearning/EspriEnergy/CheckPosition/RDCX.pdf",
